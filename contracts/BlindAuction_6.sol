@@ -15,6 +15,7 @@ contract BlindAuction_6 {
     // 或以秒为单位的时间段。
     address payable public beneficiary;
     uint public auctionEndTime;
+    uint public revealEndTime;
 
     // 拍卖的当前状态。
     address public highestBidder;
@@ -28,6 +29,11 @@ contract BlindAuction_6 {
     error OnlyCanBeCallAfterThisTime();
     /// 仅允许在此时间前调用
     error OnlyCanBeCallBeforeThisTime();
+
+    
+    event SomeOneBid(address bidder);
+    event SomeOneReveal(address bidder);
+    event AuctionEnded(address winner, uint highestBid);
 
     // 允许取回以前的竞标。
     mapping(address => uint) public pendingReturns;
@@ -49,10 +55,12 @@ contract BlindAuction_6 {
     /// 拍卖时长为 `_biddingTime`。
     constructor(
         uint biddingTime,
+        uint revealTime, 
         address payable beneficiaryAddress
     ) {
         beneficiary = beneficiaryAddress;
         auctionEndTime = block.timestamp + biddingTime;
+        revealEndTime = auctionEndTime + revealTime;
     }
 
     /// 可以通过 `_blindedBid` = keccak256(value, fake, secret)
@@ -89,7 +97,7 @@ contract BlindAuction_6 {
         uint[] calldata values,
         bool[] calldata fakes,
         string[] calldata secrets
-    ) external  {
+    ) external onlyAfter(auctionEndTime) onlyBefore(revealEndTime) {
         uint length = bids[msg.sender].length;
         require(values.length == length);
         require(fakes.length == length);
@@ -136,7 +144,7 @@ contract BlindAuction_6 {
     }
 
     /// 结束拍卖，并把最高的出价发送给受益人。
-    function auctionEnd() external onlyAfter(auctionEndTime) {
+    function auctionEnd() external onlyAfter(revealEndTime) {
         // 对于可与其他合约交互的函数（意味着它会调用其他函数或发送以太币），
         // 一个好的指导方针是将其结构分为三个阶段：
         // 1. 检查条件
@@ -153,5 +161,6 @@ contract BlindAuction_6 {
         ended = true;
         // 3. 交互
         beneficiary.transfer(highestBid);
+        emit AuctionEnded(highestBidder, highestBid);
     }
 }
