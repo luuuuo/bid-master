@@ -14,7 +14,7 @@ contract BlindAuction_6 {
     // 时间是 unix 的绝对时间戳（自1970-01-01以来的秒数）
     // 或以秒为单位的时间段。
     address payable public beneficiary;
-    uint public auctionEndTime;
+    uint public bidEndTime;
     uint public revealEndTime;
 
     // 拍卖的当前状态。
@@ -33,7 +33,7 @@ contract BlindAuction_6 {
     
     event SomeOneBid(address bidder);
     event SomeOneReveal(address bidder);
-    event AuctionEnded(address winner, uint highestBid);
+    event AuctionEnded();
 
     // 允许取回以前的竞标。
     mapping(address => uint) public pendingReturns;
@@ -59,8 +59,8 @@ contract BlindAuction_6 {
         address payable beneficiaryAddress
     ) {
         beneficiary = beneficiaryAddress;
-        auctionEndTime = block.timestamp + biddingTime;
-        revealEndTime = auctionEndTime + revealTime;
+        bidEndTime = block.timestamp + biddingTime;
+        revealEndTime = bidEndTime + revealTime;
     }
 
     /// 可以通过 `_blindedBid` = keccak256(value, fake, secret)
@@ -70,8 +70,9 @@ contract BlindAuction_6 {
     /// 将 "fake" 设置为 true ，
     /// 然后发送满足订金金额但又不与出价相同的金额是隐藏实际出价的方法。
     /// 同一个地址可以放置多个出价。
-    function bid(bytes32 blindedBid) external payable onlyBefore(auctionEndTime) {
+    function bid(bytes32 blindedBid) external payable onlyBefore(bidEndTime) {
         bids[msg.sender].push(Bid({ blindedBid: blindedBid, deposit: msg.value }));
+        emit SomeOneBid(msg.sender);
     }
 
     /// 撤回出价过高的竞标。
@@ -97,7 +98,7 @@ contract BlindAuction_6 {
         uint[] calldata values,
         bool[] calldata fakes,
         string[] calldata secrets
-    ) external onlyAfter(auctionEndTime) onlyBefore(revealEndTime) {
+    ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
         uint length = bids[msg.sender].length;
         require(values.length == length);
         require(fakes.length == length);
@@ -116,7 +117,7 @@ contract BlindAuction_6 {
                 // 不返还订金。
                 continue;
             }
-            console.log("==================");
+            console.log("========Check pass==========");
             refund += bidToCheck.deposit;
             // 处理真正用于招标的金额，如果是最高投标额就不返回给用户
             if (!fake && bidToCheck.deposit >= value) {
@@ -126,6 +127,7 @@ contract BlindAuction_6 {
             bidToCheck.blindedBid = bytes32(0);
         }
         payable(msg.sender).transfer(refund);
+        emit SomeOneReveal(msg.sender);
     }
         
     // 这是一个 "internal" 函数，
@@ -161,6 +163,6 @@ contract BlindAuction_6 {
         ended = true;
         // 3. 交互
         beneficiary.transfer(highestBid);
-        emit AuctionEnded(highestBidder, highestBid);
+        emit AuctionEnded();
     }
 }
