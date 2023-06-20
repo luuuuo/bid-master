@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
+import "hardhat/console.sol";
 
-contract BlindAuction_5 {
+contract BlindAuction_6 {
     struct Bid {
         bytes32 blindedBid;
         uint deposit;
@@ -78,6 +79,60 @@ contract BlindAuction_5 {
             // 以便使用成员函数 `transfer()`。
             payable(msg.sender).transfer(amount);
         }
+    }
+
+
+    /// 披露你的盲拍出价。
+    /// 对于所有正确披露的无效出价以及除最高出价以外的所有出价，您都将获得退款。
+    /// 未披露的盲拍将竞拍无效
+    function reveal(
+        uint[] calldata values,
+        bool[] calldata fakes,
+        string[] calldata secrets
+    ) external  {
+        uint length = bids[msg.sender].length;
+        require(values.length == length);
+        require(fakes.length == length);
+        require(secrets.length == length);
+        uint refund;
+        for (uint i = 0; i < length; i++) {
+            Bid storage bidToCheck = bids[msg.sender][i];
+            (uint value, bool fake, string calldata secret) = (values[i], fakes[i], secrets[i]);
+            console.log("=======value===========", value);
+            console.log("=======fake===========", fake);
+            console.logString(secret);
+            console.logBytes32(bidToCheck.blindedBid);
+            console.logBytes32(keccak256(abi.encode(value, fake, secret)));
+            if (bidToCheck.blindedBid != keccak256(abi.encode(value, fake, secret))) {
+                // 出价未能正确披露。
+                // 不返还订金。
+                continue;
+            }
+            console.log("==================");
+            refund += bidToCheck.deposit;
+            // 处理真正用于招标的金额，如果是最高投标额就不返回给用户
+            if (!fake && bidToCheck.deposit >= value) {
+                if (placeBid(msg.sender, value)) refund -= value;
+            }
+            // 使发送者不可能再次认领同一笔订金。
+            bidToCheck.blindedBid = bytes32(0);
+        }
+        payable(msg.sender).transfer(refund);
+    }
+        
+    // 这是一个 "internal" 函数，
+    // 意味着它只能在本合约（或继承合约）内被调用。
+    function placeBid(address bidder, uint value) internal returns (bool success) {
+        if (value <= highestBid) {
+            return false;
+        }
+        if (highestBidder != address(0)) {
+            // 返还之前的最高出价
+            pendingReturns[highestBidder] += highestBid;
+        }
+        highestBid = value;
+        highestBidder = bidder;
+        return true;
     }
 
     /// 结束拍卖，并把最高的出价发送给受益人。
