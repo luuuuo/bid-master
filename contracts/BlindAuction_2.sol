@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
 
-contract BlindAuction_3 {
+contract BlindAuction_2 {
     // 拍卖的当前状态。
     address public highestBidder;
     uint public highestBid;
