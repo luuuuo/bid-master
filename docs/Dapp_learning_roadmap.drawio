@@ -1,25 +1,62 @@
-<mxfile host="app.diagrams.net" modified="2023-06-25T09:01:43.396Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="DVNqXLRyjwSrXfWaWHrm" version="21.5.0" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-25T10:16:57.274Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="bfhQSUWIpkB5B9ErSJOc" version="21.5.0" type="github">
   <diagram name="Page-1" id="HH8esK9ga7w3-hJnMdNn">
-    <mxGraphModel dx="1938" dy="1175" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2059" dy="1249" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="7R218EViUMxOIvM_oaZn-276" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1200" y="710" width="427" height="218" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-277" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="7R218EViUMxOIvM_oaZn-276">
+          <mxGeometry x="10" y="10" width="400" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-263" value="" style="group" vertex="1" connectable="0" parent="7R218EViUMxOIvM_oaZn-276">
+          <mxGeometry x="15" y="30" width="380" height="188" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-226" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry y="20" width="190" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-227" value="主流NFT协议(ERC721/ERC1155/ERC2981)认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;container=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="10" y="90" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-228" value="去中心化存储(NFT)认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="10" y="70" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-229" value="NFT交易市场" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="10" y="50" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-253" value="以下认证任选1项" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="45" y="20" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-231" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=#10739e;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="190" width="190" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-232" value="" style="group" vertex="1" connectable="0" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="200" y="28" width="180" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-233" value="主流ERC协议（ERC20/ERC2612/ERC4626）认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;container=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-232">
+          <mxGeometry y="80" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-234" value="闪电贷认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-232">
+          <mxGeometry y="40" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-235" value="循环借贷认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-232">
+          <mxGeometry y="60" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-236" value="收益聚合器认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-232">
+          <mxGeometry y="20" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-237" value="自定义预言机认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-232">
+          <mxGeometry width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-251" value="以下认证任选4项" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-263">
+          <mxGeometry x="235" width="100" height="30" as="geometry" />
+        </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#36393d;" vertex="1" parent="1">
           <mxGeometry x="110" y="570" width="880" height="420" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
           <mxGeometry x="110" y="405" width="880" height="185" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-137" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-121" target="7R218EViUMxOIvM_oaZn-66">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="420" y="470" />
-              <mxPoint x="342" y="470" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-121" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1">
-          <mxGeometry x="220" y="407.5" width="390" height="52.5" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="110" y="305" width="880" height="100" as="geometry" />
@@ -69,7 +106,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-61" value="以太坊基础&lt;br style=&quot;border-color: var(--border-color); text-align: left; margin: 0px; outline: none; padding: 0px; font-family: &amp;quot;PingFang SC&amp;quot;, Helvetica, Tahoma, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, SimSun, Heiti, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;&quot;&gt;Dapp概述&lt;/span&gt;&lt;br style=&quot;border-color: var(--border-color); text-align: left; margin: 0px; outline: none; padding: 0px; font-family: &amp;quot;PingFang SC&amp;quot;, Helvetica, Tahoma, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, SimSun, Heiti, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;&quot;&gt;以太坊智能合约&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
-          <mxGeometry x="355" y="325" width="120" height="60" as="geometry" />
+          <mxGeometry x="270" y="325" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-115" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-62" target="7R218EViUMxOIvM_oaZn-72">
           <mxGeometry relative="1" as="geometry" />
@@ -96,39 +133,19 @@
           <mxGeometry x="1" y="50" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-113" value="DApp开发应知证书" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=17;" vertex="1" parent="1">
-          <mxGeometry x="115" y="310" width="200" height="30" as="geometry" />
+          <mxGeometry x="115" y="310" width="75" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-64" value="合约部署验证认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
-          <mxGeometry x="282" y="414" width="120" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-65" value="合约编码规范认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
-          <mxGeometry x="282" y="434" width="120" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-133" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-66" target="7R218EViUMxOIvM_oaZn-131">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-66" value="Hardhat认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;container=0;" vertex="1" parent="1">
-          <mxGeometry x="282" y="517.5" width="120" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-67" value="合约单元测试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
-          <mxGeometry x="434.75" y="434" width="120" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-68" value="合约集成测试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
-          <mxGeometry x="434.75" y="414" width="120" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-123" value="公共认证" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="220" y="417" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-129" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-122" target="7R218EViUMxOIvM_oaZn-48">
+        <mxCell id="7R218EViUMxOIvM_oaZn-133" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="7R218EViUMxOIvM_oaZn-131">
           <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="520" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="545" y="560" />
-              <mxPoint x="545" y="560" />
+              <mxPoint x="330" y="563" />
+              <mxPoint x="320" y="563" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-138" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="182" y="614.5" width="320" height="115" as="geometry" />
+          <mxGeometry x="170" y="605" width="320" height="115" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-131" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="7R218EViUMxOIvM_oaZn-138">
           <mxGeometry width="320" height="115" as="geometry" />
@@ -165,32 +182,6 @@
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-132" value="公共认证" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-138">
           <mxGeometry y="37.5" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-139" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="470" y="497" width="150" height="83" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-122" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="7R218EViUMxOIvM_oaZn-139">
-          <mxGeometry width="150" height="83" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-69" value="fabric联盟链部署认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-139">
-          <mxGeometry x="16" y="29.56875" width="120" height="20.75" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-127" value="合约升级认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-139">
-          <mxGeometry x="16" y="5.1875" width="120" height="20.75" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-130" value="合约调试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-139">
-          <mxGeometry x="16" y="51.87500000000001" width="120" height="20.75" as="geometry" />
-        </mxCell>
-        <mxCell id="7R218EViUMxOIvM_oaZn-140" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="7R218EViUMxOIvM_oaZn-122">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="418" y="460" as="sourcePoint" />
-            <mxPoint x="540" y="468.6399999999999" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="420" y="460" />
-              <mxPoint x="420" y="470" />
-              <mxPoint x="545" y="470" />
-            </Array>
-          </mxGeometry>
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-156" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="125" y="790" width="190" height="110" as="geometry" />
@@ -250,6 +241,181 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="7R218EViUMxOIvM_oaZn-165" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-102" target="7R218EViUMxOIvM_oaZn-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-174" value="获取知识" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=23;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="345" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-175" value="初级：应用技能" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=23;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="455" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-176" value="高级技能" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=23;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="790" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-178" value="就业方向" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=23;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="986.25" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-180" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1793.7368421052633" y="507.5" as="sourcePoint" />
+            <mxPoint x="1794.75" y="1027.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-181" value="智能合约开发工程师" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1344.5" y="950" width="132.5" height="52.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-185" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-186">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1968.5" y="1027.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-186" value="Truffle认证&lt;br style=&quot;border-color: var(--border-color); margin: 0px; outline: none; padding: 0px;&quot;&gt;Foundry认证&lt;br style=&quot;border-color: var(--border-color); margin: 0px; outline: none; padding: 0px;&quot;&gt;（二选一）&lt;br style=&quot;border-color: var(--border-color); margin: 0px; outline: none; padding: 0px;&quot;&gt;&lt;span style=&quot;border-color: var(--border-color); font-size: 9pt; text-align: left; margin: 0px; outline: none; padding: 0px; font-family: &amp;quot;PingFang SC&amp;quot;, Helvetica, Tahoma, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, SimSun, Heiti, sans-serif; color: rgb(255, 120, 0);&quot;&gt;待 包蕾 补充&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1907" y="440" width="123" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-189" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-190" target="7R218EViUMxOIvM_oaZn-196">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-190" value="DApp前端技术栈" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1733.75" y="332.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-191" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-192" target="7R218EViUMxOIvM_oaZn-186">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-192" value="DApp测试" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1908.5" y="332.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-193" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1733.75" y="432.5" width="121" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-194" value="ethers.js认证/web3.js认证（二选一）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-193">
+          <mxGeometry width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-195" value="wagmi认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-193">
+          <mxGeometry y="30" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-196" value="Web3Modal认证/RainbowKit认证（二选一）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-193">
+          <mxGeometry x="1" y="50" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-197" value="DApp开发应知证书" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="290" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-219" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1620" y="190" width="150" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-220" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="7R218EViUMxOIvM_oaZn-219">
+          <mxGeometry width="150" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-221" value="fabric联盟链部署认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-219">
+          <mxGeometry x="16" y="29.56875" width="120" height="20.75" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-222" value="合约升级认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-219">
+          <mxGeometry x="16" y="5.1875" width="120" height="20.75" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-223" value="合约调试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-219">
+          <mxGeometry x="16" y="51.87500000000001" width="120" height="20.75" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-243" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="180" y="450" width="300" height="72.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-121" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="7R218EViUMxOIvM_oaZn-243">
+          <mxGeometry width="300" height="72.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-64" value="合约部署验证认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-243">
+          <mxGeometry x="7" y="6.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-65" value="合约编码规范认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-243">
+          <mxGeometry x="7" y="26.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-66" value="Hardhat认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;container=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-243">
+          <mxGeometry x="79" y="47" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-67" value="合约单元测试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-243">
+          <mxGeometry x="159.75" y="26.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-68" value="合约集成测试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-243">
+          <mxGeometry x="159.75" y="6.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-245" value="Fabric区块链开发工程师" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1610" y="1020" width="141.25" height="52.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-246" value="DApp前端开发工程师" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1770" y="1110" width="141.25" height="52.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-247" value="DApp测试工程师" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a0522d;strokeColor=#6D1F00;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="1820" y="1021.25" width="141.25" height="52.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-188" value="以太坊基础&lt;br style=&quot;border-color: var(--border-color); text-align: left; margin: 0px; outline: none; padding: 0px; font-family: &amp;quot;PingFang SC&amp;quot;, Helvetica, Tahoma, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, SimSun, Heiti, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;&quot;&gt;Dapp概述&lt;/span&gt;&lt;br style=&quot;border-color: var(--border-color); text-align: left; margin: 0px; outline: none; padding: 0px; font-family: &amp;quot;PingFang SC&amp;quot;, Helvetica, Tahoma, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, SimSun, Heiti, sans-serif; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;&quot;&gt;以太坊智能合约&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1342" y="332.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-260" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-188" target="7R218EViUMxOIvM_oaZn-172">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-258" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1271" y="570" width="271" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-207" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;container=0;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry width="271" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-208" value="合约设计模式认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="11" y="7.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-209" value="合约升级认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="136" y="7.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-210" value="合约GAS优化认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="11" y="27.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-211" value="合约安全考量认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="136" y="27.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-212" value="OpenZepplin库认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="11" y="47.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-213" value="合约治理认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="136" y="47.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-214" value="多签钱包认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="11" y="67.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-215" value="合约调试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="136" y="67.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-216" value="合约自动化认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="11" y="87.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-217" value="随机数生成认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="7R218EViUMxOIvM_oaZn-258">
+          <mxGeometry x="136" y="87.5" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-261" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.485;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-172" target="7R218EViUMxOIvM_oaZn-207">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-172" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;" vertex="1" parent="1">
+          <mxGeometry x="1327" y="417.5" width="150" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-198" value="合约部署验证认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1339" y="424" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-199" value="合约编码规范认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1339" y="444" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-287" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-201" target="7R218EViUMxOIvM_oaZn-203">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-201" value="Hardhat认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;container=0;" vertex="1" parent="1">
+          <mxGeometry x="1339" y="464" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-202" value="合约单元测试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1339" y="505" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-203" value="合约集成测试认证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+          <mxGeometry x="1339" y="485" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-282" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-207" target="7R218EViUMxOIvM_oaZn-277">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1403" y="690" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7R218EViUMxOIvM_oaZn-283" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="7R218EViUMxOIvM_oaZn-277" target="7R218EViUMxOIvM_oaZn-181">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
