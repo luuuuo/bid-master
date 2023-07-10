@@ -14,8 +14,8 @@ contract SimpleAuction {
     // 允许取回以前的竞标。
     mapping(address => uint) pendingReturns;
 
-    // 拍卖结束后设为 `true`，将禁止所有的变更
-    // 默认初始化为 `false`。
+    // 拍卖结束后设为 'true'，将禁止所有的变更
+    // 默认初始化为 'false'。
     bool ended;
 
     // 变化时将会发出的事件。
@@ -36,8 +36,8 @@ contract SimpleAuction {
     /// 函数 auctionEnd 已经被调用。
     error AuctionEndAlreadyCalled();
 
-    /// 以受益者地址 `beneficiaryAddress` 创建一个简单的拍卖，
-    /// 拍卖时长为 `_biddingTime`。
+    /// 以受益者地址 'beneficiaryAddress' 创建一个简单的拍卖，
+    /// 拍卖时长为 '_biddingTime'。
     constructor(
         uint biddingTime,
         address payable beneficiaryAddress
@@ -50,7 +50,7 @@ contract SimpleAuction {
     /// 如果没有在拍卖中胜出，则返还出价。
     function bid() external payable {
         // 参数不是必要的。因为所有的信息已经包含在了交易中。
-        // 关键字 `payable` 是函数能够接收以太币的必要条件。
+        // 关键字 'payable' 是函数能够接收以太币的必要条件。
 
         // 如果拍卖已结束，撤销函数的调用。
         if (block.timestamp > auctionEndTime)
@@ -79,13 +79,13 @@ contract SimpleAuction {
         uint amount = pendingReturns[msg.sender];
         if (amount > 0) {
             // 将其设置为0是很重要的，
-            // 因为接收者可以在 `send` 返回之前再次调用这个函数
+            // 因为接收者可以在 'send' 返回之前再次调用这个函数
             // 作为接收调用的一部分。
             pendingReturns[msg.sender] = 0;
 
-            // msg.sender 不属于 `address payable` 类型，
-            // 必须使用 `payable(msg.sender)` 明确转换，
-            // 以便使用成员函数 `send()`。
+            // msg.sender 不属于 'address payable' 类型，
+            // 必须使用 'payable(msg.sender)' 明确转换，
+            // 以便使用成员函数 'send()'。
             if (!payable(msg.sender).send(amount)) {
                 // 这里不需抛出异常，只需重置未付款
                 pendingReturns[msg.sender] = amount;

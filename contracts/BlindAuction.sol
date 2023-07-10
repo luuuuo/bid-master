@@ -26,17 +26,17 @@ contract BlindAuction {
     // 描述失败的错误信息。
 
     /// 该函数被过早调用。
-    /// 在 `time` 时间再试一次。
+    /// 在 'time' 时间再试一次。
     error TooEarly(uint time);
     /// 该函数被过晚调用。
-    /// 它不能在 `time` 时间之后被调用。
+    /// 它不能在 'time' 时间之后被调用。
     error TooLate(uint time);
     /// 函数 auctionEnd 已经被调用。
     error AuctionEndAlreadyCalled();
 
     // 使用 修饰符（modifier） 可以更便捷的校验函数的入参。
-    // `onlyBefore` 会被用于后面的 `bid` 函数：
-    // 新的函数体是由 modifier 本身的函数体，其中`_`被旧的函数体所取代。
+    // 'onlyBefore' 会被用于后面的 'bid' 函数：
+    // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
     modifier onlyBefore(uint time) {
         // if (block.timestamp >= time) revert TooLate(time);
         _;
@@ -52,7 +52,7 @@ contract BlindAuction {
         revealEnd = biddingEnd + revealTime;
     }
 
-    /// 可以通过 `_blindedBid` = keccak256(value, fake, secret)
+    /// 可以通过 '_blindedBid' = keccak256(value, fake, secret)
     /// 设置一个盲拍。
     /// 只有在出价披露阶段被正确披露，已发送的以太币才会被退还。
     /// 如果与出价一起发送的以太币至少为 "value" 且 "fake" 不为真，则出价有效。
@@ -105,7 +105,7 @@ contract BlindAuction {
         if (amount > 0) {
             // 这里很重要，首先要设零值。
             // 因为，作为接收调用的一部分，
-            // 接收者可以在 `transfer` 返回之前重新调用该函数。
+            // 接收者可以在 'transfer' 返回之前重新调用该函数。
             //（可查看上面关于 条件 -> 影响 -> 交互 的标注）
             pendingReturns[msg.sender] = 0;
 

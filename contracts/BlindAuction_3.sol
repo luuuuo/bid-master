@@ -31,7 +31,7 @@ contract BlindAuction_3 {
         uint amount = pendingReturns[msg.sender];
         if (amount > 0) {
             // 将其设置为0是很重要的，
-            // 因为接收者可以在 `send` 返回之前再次调用这个函数
+            // 因为接收者可以在 'send' 返回之前再次调用这个函数
             // 作为接收调用的一部分。
             pendingReturns[msg.sender] = 0;
             payable(msg.sender).transfer(amount);

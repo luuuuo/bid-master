@@ -30,12 +30,12 @@ contract BlindAuction_5 {
 
     // 允许取回以前的竞标。
     mapping(address => uint) public pendingReturns;
-    // 拍卖结束后设为 `true`，将禁止所有的变更
-    // 默认初始化为 `false`。
+    // 拍卖结束后设为 'true'，将禁止所有的变更
+    // 默认初始化为 'false'。
     bool ended;
     // 使用 修饰符（modifier） 可以更便捷的校验函数的入参。
-    // `onlyBefore` 会被用于后面的 `bid` 函数：
-    // 新的函数体是由 modifier 本身的函数体，其中`_`被旧的函数体所取代。
+    // 'onlyBefore' 会被用于后面的 'bid' 函数：
+    // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
     modifier onlyBefore(uint time) {
         if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
         _;
@@ -44,8 +44,8 @@ contract BlindAuction_5 {
         if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
         _;
     }
-    /// 以受益者地址 `beneficiaryAddress` 创建一个简单的拍卖，
-    /// 拍卖时长为 `_biddingTime`。
+    /// 以受益者地址 'beneficiaryAddress' 创建一个简单的拍卖，
+    /// 拍卖时长为 '_biddingTime'。
     constructor(
         uint biddingTime,
         address payable beneficiaryAddress
@@ -54,7 +54,7 @@ contract BlindAuction_5 {
         auctionEndTime = block.timestamp + biddingTime;
     }
 
-    /// 可以通过 `_blindedBid` = keccak256(value, fake, secret)
+    /// 可以通过 '_blindedBid' = keccak256(value, fake, secret)
     /// 设置一个盲拍。
     /// 只有在出价披露阶段被正确披露，已发送的以太币才会被退还。
     /// 如果与出价一起发送的以太币至少为 "value" 且 "fake" 不为真，则出价有效。
@@ -70,12 +70,12 @@ contract BlindAuction_5 {
         uint amount = pendingReturns[msg.sender];
         if (amount > 0) {
             // 将其设置为0是很重要的，
-            // 因为接收者可以在 `send` 返回之前再次调用这个函数
+            // 因为接收者可以在 'send' 返回之前再次调用这个函数
             // 作为接收调用的一部分。
             pendingReturns[msg.sender] = 0;
-            // msg.sender 不属于 `address payable` 类型，
-            // 必须使用 `payable(msg.sender)` 明确转换，
-            // 以便使用成员函数 `transfer()`。
+            // msg.sender 不属于 'address payable' 类型，
+            // 必须使用 'payable(msg.sender)' 明确转换，
+            // 以便使用成员函数 'transfer()'。
             payable(msg.sender).transfer(amount);
         }
     }
