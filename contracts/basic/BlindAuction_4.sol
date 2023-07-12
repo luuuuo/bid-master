@@ -1,14 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
 
-contract BlindAuction_5 {
-    struct Bid {
-        bytes32 blindedBid;
-        uint deposit;
-    }
-    
-    mapping(address => Bid[]) public bids;
-
+contract BlindAuction_4 {
     // 拍卖的参数。
     // 时间是 unix 的绝对时间戳（自1970-01-01以来的秒数）
     // 或以秒为单位的时间段。
@@ -23,19 +16,19 @@ contract BlindAuction_5 {
     error BidNotHighEnough(uint highestBid);
     /// 函数 auctionEnd 已经被调用。
     error AuctionEndAlreadyCalled();
-    /// 仅允许在此时间后调用
+    /// 仅允许在这时间后调用
     error OnlyCanBeCallAfterThisTime();
-    /// 仅允许在此时间前调用
+    /// 仅允许在这时间前调用
     error OnlyCanBeCallBeforeThisTime();
 
     // 允许取回以前的竞标。
     mapping(address => uint) public pendingReturns;
-    // 拍卖结束后设为 `true`，将禁止所有的变更
-    // 默认初始化为 `false`。
+    // 拍卖结束后设为 'true'，将禁止所有的变更
+    // 默认初始化为 'false'。
     bool ended;
     // 使用 修饰符（modifier） 可以更便捷的校验函数的入参。
-    // `onlyBefore` 会被用于后面的 `bid` 函数：
-    // 新的函数体是由 modifier 本身的函数体，其中`_`被旧的函数体所取代。
+    // 'onlyBefore' 会被用于后面的 'bid' 函数：
+    // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
     modifier onlyBefore(uint time) {
         if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
         _;
@@ -44,8 +37,8 @@ contract BlindAuction_5 {
         if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
         _;
     }
-    /// 以受益者地址 `beneficiaryAddress` 创建一个简单的拍卖，
-    /// 拍卖时长为 `_biddingTime`。
+    /// 以受益者地址 'beneficiaryAddress' 创建一个简单的拍卖，
+    /// 拍卖时长为 '_biddingTime'。
     constructor(
         uint biddingTime,
         address payable beneficiaryAddress
@@ -54,15 +47,18 @@ contract BlindAuction_5 {
         auctionEndTime = block.timestamp + biddingTime;
     }
 
-    /// 可以通过 `_blindedBid` = keccak256(value, fake, secret)
-    /// 设置一个盲拍。
-    /// 只有在出价披露阶段被正确披露，已发送的以太币才会被退还。
-    /// 如果与出价一起发送的以太币至少为 "value" 且 "fake" 不为真，则出价有效。
-    /// 将 "fake" 设置为 true ，
-    /// 然后发送满足订金金额但又不与出价相同的金额是隐藏实际出价的方法。
-    /// 同一个地址可以放置多个出价。
-    function bid(bytes32 blindedBid) external payable onlyBefore(auctionEndTime) {
-        bids[msg.sender].push(Bid({ blindedBid: blindedBid, deposit: msg.value }));
+    /// 对拍卖进行出价，具体的出价随交易一起发送。
+    function bid() external payable onlyBefore(auctionEndTime) {
+        // 如果出价不高，就把钱送回去
+        //（revert语句将恢复这个函数执行中的所有变化，
+        // 包括它已经收到钱）。
+        if (msg.value <= highestBid)
+            revert BidNotHighEnough(highestBid);
+        if (highestBid != 0) {
+            pendingReturns[highestBidder] += highestBid;
+        }
+        highestBidder = msg.sender;
+        highestBid = msg.value;
     }
 
     /// 撤回出价过高的竞标。
@@ -70,12 +66,12 @@ contract BlindAuction_5 {
         uint amount = pendingReturns[msg.sender];
         if (amount > 0) {
             // 将其设置为0是很重要的，
-            // 因为接收者可以在 `send` 返回之前再次调用这个函数
+            // 因为接收者可以在 'send' 返回之前再次调用这个函数
             // 作为接收调用的一部分。
             pendingReturns[msg.sender] = 0;
-            // msg.sender 不属于 `address payable` 类型，
-            // 必须使用 `payable(msg.sender)` 明确转换，
-            // 以便使用成员函数 `transfer()`。
+            // msg.sender 不属于 'address payable' 类型，
+            // 必须使用 'payable(msg.sender)' 明确转换，
+            // 以便使用成员函数 'transfer()'。
             payable(msg.sender).transfer(amount);
         }
     }
