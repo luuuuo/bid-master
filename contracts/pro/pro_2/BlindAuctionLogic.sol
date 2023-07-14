@@ -11,7 +11,7 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, Bli
     /// 设置一个盲拍。
     function bid(bytes32 blindedBid) external payable onlyBefore(bidEndTime) {
         bids[msg.sender].push(BlindAuctionLib.Bid({ blindedBid: blindedBid, deposit: msg.value }));
-        emit SomeOneBid(msg.sender);
+        emit SomeoneBid(msg.sender);
     }
     /// 撤回出价过高的竞标。
     function withdraw() external {
@@ -28,12 +28,13 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, Bli
         string[] calldata secrets
     ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
         BlindAuctionLib.BidReveal memory bidReveal = BlindAuctionLib.BidReveal(values, fakes, secrets);
+        emit RevealDetail(values, fakes, secrets);
         (uint256 lastHighestBid, address lastHighestBidder, uint256 refund) = BlindAuctionLib.reveal(bids[msg.sender], bidReveal, highestBid, highestBidder);
         highestBid = lastHighestBid;
         highestBidder = lastHighestBidder;
         delete bids[msg.sender];
         payable(msg.sender).transfer(refund);
-        emit SomeOneReveal(msg.sender);
+        emit SomeoneReveal(msg.sender);
     }
     /// 结束拍卖，并把最高的出价发送给受益人。
     function auctionEnd() external onlyAfter(revealEndTime) {

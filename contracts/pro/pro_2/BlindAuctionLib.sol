@@ -7,6 +7,7 @@ import "hardhat/console.sol";
 在这个库合约中，定义了一些新的结构体和方法，用于对拍卖的状态进行操作。外部合约只需要引用这个库合约，并使用其中的方法即可。
  */
 library BlindAuctionLib {
+
     struct Bid {
         bytes32 blindedBid;
         uint deposit;
@@ -16,7 +17,6 @@ library BlindAuctionLib {
         bool[] fakes;
         string[] secrets;
     }
-
     error RevealMsgError(uint value, bool fake, string secret);
 
     function reveal(

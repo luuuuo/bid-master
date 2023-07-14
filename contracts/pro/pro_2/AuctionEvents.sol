@@ -2,7 +2,9 @@
 pragma solidity ^0.8.17;
 
 contract AuctionEvents {
-    event SomeOneBid(address bidder);
-    event SomeOneReveal(address bidder);
+    event SomeoneBid(address bidder);
+    event SomeoneReveal(address bidder);
     event AuctionEnded();
+    event RevealDetail(uint[] values, bool[] fakes, string[] secrets);
+
 }
