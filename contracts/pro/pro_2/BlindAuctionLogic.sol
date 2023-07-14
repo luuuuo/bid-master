@@ -6,7 +6,7 @@ import "./AuctionErrors.sol";
 import "./AuctionEvents.sol";
 import "./AuctionModifier.sol";
 import "./BlindAuctionStorage.sol";
-contract BlindAuction is AuctionEvents, AuctionErrors, AuctionModifier, BlindAuctionStorage{
+contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, BlindAuctionStorage{
     constructor() {}
     /// 设置一个盲拍。
     function bid(bytes32 blindedBid) external payable onlyBefore(bidEndTime) {

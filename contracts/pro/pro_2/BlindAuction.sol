@@ -32,11 +32,11 @@ contract BlindAuction is BlindAuctionStorage{
         require(success, "Delegatecall failed");
     }
 
-    function reveal() external {
+    function reveal(uint[] calldata values, bool[] calldata fakes, string[] calldata secrets) external {
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = AUCTION_LOGIC_ADDRESS.delegatecall(
-            abi.encodeWithSignature("reveal(uint[], bool[], string[])")
+        (bool success, bytes memory result) = AUCTION_LOGIC_ADDRESS.delegatecall(
+            abi.encodeWithSignature("reveal(uint[], bool[], string[])", values, fakes, secrets)
         );
-        require(success, "Delegatecall failed");
+        require(success, abi.decode(result, (string)));
     }
 }
