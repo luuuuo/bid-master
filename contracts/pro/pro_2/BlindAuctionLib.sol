@@ -29,7 +29,9 @@ library BlindAuctionLib {
         require(bidReveals.values.length == length);
         require(bidReveals.fakes.length == length);
         require(bidReveals.secrets.length == length);
+        console.log("=======start===========");
         for (uint i = 0; i < length; i++) {
+            console.log("=======end===========");
             Bid memory bidToCheck = blindInfo[i];
             (uint value, bool fake, string memory secret) = (bidReveals.values[i], bidReveals.fakes[i], bidReveals.secrets[i]);
             if (bidToCheck.blindedBid != keccak256(abi.encode(value, fake, secret))) {

@@ -27,9 +27,13 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, Bli
         bool[] calldata fakes,
         string[] calldata secrets
     ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
+        console.log("=======logic reveal 0===========");
         BlindAuctionLib.BidReveal memory bidReveal = BlindAuctionLib.BidReveal(values, fakes, secrets);
+        console.log("=======logic reveal 1===========");
         emit RevealDetail(values, fakes, secrets);
+        console.log("=======logic reveal 2===========");
         (uint256 lastHighestBid, address lastHighestBidder, uint256 refund) = BlindAuctionLib.reveal(bids[msg.sender], bidReveal, highestBid, highestBidder);
+        console.log("=======logic reveal 3===========");
         highestBid = lastHighestBid;
         highestBidder = lastHighestBidder;
         delete bids[msg.sender];
@@ -43,5 +47,9 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, Bli
         ended = true;
         beneficiary.transfer(highestBid);
         emit AuctionEnded();
+    }
+
+    fallback() external {
+        console.log("=======fallback===========");
     }
 }
