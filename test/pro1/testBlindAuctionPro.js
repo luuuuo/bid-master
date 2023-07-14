@@ -13,7 +13,7 @@ describe("BlindAuctionPro test", function () {
     // 部署
     const BlindAuctionLib = await ethers.getContractFactory("contracts/pro/pro_1/BlindAuctionLib.sol:BlindAuctionLib");
     const blindAuctionLib = await BlindAuctionLib.deploy();
-    console.log(blindAuctionLib.address);
+    console.log("blindAuctionLib.address", blindAuctionLib.address);
     const biddingTime = 60;
     const revealTime = 60;
     const beneficiaryAddress = bob.address;
@@ -23,6 +23,7 @@ describe("BlindAuctionPro test", function () {
       },
     });
     const blindAuction = await BlindAuction.deploy(biddingTime, revealTime, beneficiaryAddress);
+    console.log("blindAuction.address", blindAuction.address);
     return { alice, bob, beneficiaryAddress, blindAuction };
   }
 
@@ -43,19 +44,19 @@ describe("BlindAuctionPro test", function () {
       // alice第一次bid
       console.log("alice第一次bid");
       console.log(bid1);
-      await blindAuction.connect(alice).bid(bid1, { value: ethers.utils.parseEther("1.0") });
+      await blindAuction.bid(bid1, {from: alice.address, value: ethers.utils.parseEther("1.0")});
       console.log(await blindAuction.bids(alice.address, 0));
       console.log("alice第一次bid EtherBalance:", await ethers.provider.getBalance(alice.address));
 
       // alice第二次bid
       console.log("alice第二次bid");
       console.log(bid2);
-      await blindAuction.connect(alice).bid(bid2, { value: ethers.utils.parseEther("2.0") });
+      await blindAuction.bid(bid2, {from: alice.address, value: ethers.utils.parseEther("2.0") });
       console.log(await blindAuction.bids(alice.address, 1));
       console.log("alice第二次bid EtherBalance:", await ethers.provider.getBalance(alice.address));
       // 披露
       console.log("alice before reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
-      await blindAuction.connect(alice).reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"]);
+      await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
       console.log("alice after reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
     });
   });
