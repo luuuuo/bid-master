@@ -55,13 +55,11 @@ describe("BlindAuctionPro test", function () {
       const balanceBeforeReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
       await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
       const balanceAfterReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
-      console.log("alice第二次bid", balanceBeforeReveal);
-      console.log("alice第二次bid", balanceAfterReveal);
-
       // 断言合约中余额为 2 ETH
       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
       // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
+      console.log("reveal后退款：", balanceAfterReveal.sub(balanceBeforeReveal).abs());
       expect(balanceAfterReveal.sub(balanceBeforeReveal).abs()).to.be.lt(ethers.utils.parseEther("1.0")).to.be.gt(ethers.utils.parseEther("0.999"));
     });
   });

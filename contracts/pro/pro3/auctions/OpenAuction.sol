@@ -41,7 +41,10 @@ contract OpenAuction{
     }
 
     function bid() external payable {
+        console.log("bid()--------------------------------------");   
+        console.logBytes(msg.data);
         // 使用 delegatecall 调用逻辑合约中的函数
+        console.logBytes(abi.encodeWithSignature("bid()"));
         (bool success, ) = getImplementation().delegatecall(
             abi.encodeWithSignature("bid()")
         );

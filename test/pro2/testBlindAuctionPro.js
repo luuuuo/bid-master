@@ -28,39 +28,44 @@ describe("BlindAuctionPro test", function () {
     const blindAuction = await BlindAuction.deploy();
     await blindAuction.init(biddingTime, revealTime, beneficiaryAddress);
     await blindAuction.upgradeTo(blindAuctionLogic.address);
+    console.log("owner", await blindAuction.getOwnerAddress())
     return { alice, bob, beneficiaryAddress, blindAuctionLogic, blindAuction };
   }
   
   describe("main flow", function () {
     it("Should Check correct attribute", async function () {
-      // loadFixture will run the setup the first time, and quickly return to that state in the other tests.
-      const { alice, bob, beneficiaryAddress, blindAuctionLogic, blindAuction } = await loadFixture(deployFixture);
-      console.log("blindAuction.address", blindAuction.address);
-
-      const bid1 = ethers.utils.keccak256(
-        ethers.utils.defaultAbiCoder.encode(["uint256", "bool", "string"], [ethers.utils.parseEther("1.0").toString(), true, "abc"]),
-      );
-      const bid2 = ethers.utils.keccak256(
-        ethers.utils.defaultAbiCoder.encode(["uint256", "bool", "string"], [ethers.utils.parseEther("2.0").toString(), false, "abc"]),
-      );
-      // alice第一次bid
-      console.log("alice第一次bid:", bid1);
-      console.log("alice第一次bid before EtherBalance:", await ethers.provider.getBalance(alice.address));
-      await blindAuction.bid(bid1, {from: alice.address, value: ethers.utils.parseEther("1.0")});
-      console.log("alice第一次bid after EtherBalance:", await ethers.provider.getBalance(alice.address));
-
-      // alice第二次bid
-      console.log("alice第二次bid:", bid2);
-      console.log("alice第二次bid before EtherBalance:", await ethers.provider.getBalance(alice.address));
-      await blindAuction.bid(bid2, {from: alice.address, value: ethers.utils.parseEther("2.0") });
-      console.log("alice第二次bid EtherBalance:", await ethers.provider.getBalance(alice.address));
-
-      // 披露
-      console.log("alice before reveal blindAuction EtherBalance:", await ethers.provider.getBalance(blindAuction.address));
-      console.log("alice before reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
-      await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
-      console.log("alice after reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
-      console.log("alice after reveal blindAuction EtherBalance:", await ethers.provider.getBalance(blindAuction.address));
+       // loadFixture will run the setup the first time, and quickly return to that state in the other tests.
+       const { alice, bob, beneficiaryAddress, blindAuction } = await loadFixture(deployFixture);
+       console.log("blindAuction.address", blindAuction.address);
+       const bid1 = ethers.utils.keccak256(
+         ethers.utils.defaultAbiCoder.encode(["uint256", "bool", "string"], [ethers.utils.parseEther("1.0").toString(), true, "abc"]),
+       );
+       const bid2 = ethers.utils.keccak256(
+         ethers.utils.defaultAbiCoder.encode(["uint256", "bool", "string"], [ethers.utils.parseEther("2.0").toString(), false, "abc"]),
+       );
+ 
+       // alice第一次bid
+       console.log("alice第一次bid");
+       await blindAuction.bid(bid1, {from: alice.address, value: ethers.utils.parseEther("1.0")});
+       // 断言合约中余额为 1 ETH
+       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("1.0"));
+ 
+       // alice第二次bid
+       console.log("alice第二次bid");
+       await blindAuction.bid(bid2, {from: alice.address, value: ethers.utils.parseEther("2.0") });
+       // 断言合约中余额为 3 ETH
+       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("3.0"));
+ 
+       // 披露
+       const balanceBeforeReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
+       await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
+       const balanceAfterReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
+       // 断言合约中余额为 2 ETH
+       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
+       // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
+       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
+       console.log("reveal后退款：", balanceAfterReveal.sub(balanceBeforeReveal).abs());
+       expect(balanceAfterReveal.sub(balanceBeforeReveal).abs()).to.be.lt(ethers.utils.parseEther("1.0")).to.be.gt(ethers.utils.parseEther("0.999"));
     });
   });
 });

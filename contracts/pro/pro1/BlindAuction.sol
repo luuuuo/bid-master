@@ -81,15 +81,15 @@ contract BlindAuction is AuctionEvents, AuctionErrors{
         string[] calldata secrets
     ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
         BlindAuctionLib.BidReveal memory bidReveal = BlindAuctionLib.BidReveal(values, fakes, secrets);
-        for (uint i = 0; i < values.length; i++) {
-            (uint value, bool fake, string memory secret) = (bidReveal.values[i], bidReveal.fakes[i], bidReveal.secrets[i]);
-            console.log("=======value===========", value);
-            console.log("=======fake===========", fake);
-            console.logString(secret);
-            console.logBytes32(bids[msg.sender][i].blindedBid);
-            console.log("=======bids[msg.sender].length===========", bids[msg.sender].length);
-            console.logBytes32(keccak256(abi.encode(value, fake, secret)));
-        }
+        // for (uint i = 0; i < values.length; i++) {
+        //     (uint value, bool fake, string memory secret) = (bidReveal.values[i], bidReveal.fakes[i], bidReveal.secrets[i]);
+        //     console.log("=======value===========", value);
+        //     console.log("=======fake===========", fake);
+        //     console.logString(secret);
+        //     console.logBytes32(bids[msg.sender][i].blindedBid);
+        //     console.log("=======bids[msg.sender].length===========", bids[msg.sender].length);
+        //     console.logBytes32(keccak256(abi.encode(value, fake, secret)));
+        // }
         (uint256 lastHighestBid, address lastHighestBidder, uint256 refund) = BlindAuctionLib.reveal(bids[msg.sender], bidReveal, highestBid, highestBidder);
         highestBid = lastHighestBid;
         highestBidder = lastHighestBidder;
