@@ -3,6 +3,9 @@ pragma solidity ^0.8.17;
 import "./AuctionInterface.sol";
 
 interface OpenAuctionInterface is AuctionInterface {
-    function bid() external;
+    function init(uint biddingTime, address payable beneficiaryAddress) external;
+
+    function bid() payable external;
+
     function withdraw() external;
 }

@@ -35,7 +35,7 @@ contract BlindAuction{
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
-            abi.encodeWithSignature("init(uint, uint, address)", biddingTime, revealTime, beneficiaryAddress)
+            abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
         );
         require(success, "Delegatecall failed");
     }

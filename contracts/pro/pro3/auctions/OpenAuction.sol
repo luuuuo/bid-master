@@ -2,10 +2,10 @@
 pragma solidity ^0.8.17;
 import "hardhat/console.sol";
 
-contract BlindAuction{
+contract OpenAuction{
 
-    bytes32 private constant implementationPosition = keccak256("bid-master");
-    bytes32 private constant ownerPosition = keccak256("bid-master-owner");
+    bytes32 private constant implementationPosition = keccak256("bid-master-open");
+    bytes32 private constant ownerPosition = keccak256("bid-master-open-owner");
     function upgradeTo(address newImplementation) public {
         if(getOwnerAddress() != address(0))
             require(getOwnerAddress() == msg.sender, "not owner's upgrade");
@@ -32,27 +32,26 @@ contract BlindAuction{
         }
     }
 
-    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
+    function init(uint biddingTime, address payable beneficiaryAddress) public {
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
-            abi.encodeWithSignature("init(uint, uint, address)", biddingTime, revealTime, beneficiaryAddress)
+            abi.encodeWithSignature("init(uint256,address)", biddingTime, beneficiaryAddress)
         );
         require(success, "Delegatecall failed");
     }
 
-    function bid(bytes32 _value) external payable {
+    function bid() external payable {
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
-            abi.encodeWithSignature("bid(bytes32)", _value)
+            abi.encodeWithSignature("bid()")
         );
         require(success, "Delegatecall failed");
     }
 
-    function reveal(uint[] calldata values, bool[] calldata fakes, string[] calldata secrets) external {
+    function withdraw() external {
         // 使用 delegatecall 调用逻辑合约中的函数
-        // msg.data 和 abi.encodeWithSignature("reveal(uint[], bool[], string[])", values, fakes, secrets) 不同？
         (bool success, bytes memory result) = getImplementation().delegatecall(
-            abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets)
+            abi.encodeWithSignature("withdraw()")
         );
         if (!success) {
             console.logBytes(result);

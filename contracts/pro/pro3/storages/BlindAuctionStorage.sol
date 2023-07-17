@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
-import "./BlindAuctionLib.sol";
+import "./../libraries/BlindAuctionLib.sol";
 
 contract BlindAuctionStorage {
     mapping(address => BlindAuctionLib.Bid[]) public bids;

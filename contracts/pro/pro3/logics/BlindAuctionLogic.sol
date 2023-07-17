@@ -2,33 +2,24 @@
 pragma solidity ^0.8.17;
 import "hardhat/console.sol";
 import "../libraries/BlindAuctionLib.sol";
-import "../errors/AuctionErrors.sol";
-import "../events/AuctionEvents.sol";
+import "../AbstractBasicAuction.sol";
 import "../storages/BlindAuctionStorage.sol";
-import "../interface/BlindAuctionInterface.sol";
-contract BlindAuctionLogic is BlindAuctionInterface, AuctionEvents, AuctionErrors, BlindAuctionStorage{
-    // 使用 修饰符（modifier） 可以更便捷的校验函数的入参。
-    // 'onlyBefore' 会被用于后面的 'bid' 函数：
-    // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
-    modifier onlyBefore(uint time) {
-        // if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
-        _;
-    }
-    modifier onlyAfter(uint time) {
-        // if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
-        _;
-    }
+import "../interfaces/BlindAuctionInterface.sol";
+
+contract BlindAuctionLogic is AbstractBasicAuction, BlindAuctionInterface, BlindAuctionStorage{
 
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
         beneficiary = beneficiaryAddress;
         bidEndTime = block.timestamp + biddingTime;
         revealEndTime = bidEndTime + revealTime;
     }
+    
     /// 设置一个盲拍。
     function bid(bytes32 blindedBid) external payable onlyBefore(bidEndTime) {
         bids[msg.sender].push(BlindAuctionLib.Bid({ blindedBid: blindedBid, deposit: msg.value }));
         emit SomeoneBid(msg.sender);
     }
+    
     function reveal(
         uint[] calldata values,
         bool[] calldata fakes,

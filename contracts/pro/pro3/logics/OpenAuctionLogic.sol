@@ -1,32 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
 
-contract OpenAuctionLogic {
-    address payable public beneficiary;
-    uint public auctionEndTime;
+import "hardhat/console.sol";
+import "../interfaces/OpenAuctionInterface.sol";
+import "../AbstractBasicAuction.sol";
+import "../errors/AuctionErrors.sol";
+import "../events/AuctionEvents.sol";
+import "../storages/OpenAuctionStorage.sol";
 
-    address public highestBidder;
-    uint public highestBid;
+contract OpenAuctionLogic is AbstractBasicAuction, OpenAuctionInterface, OpenAuctionStorage{
 
-    error BidNotHighEnough(uint highestBid);
-    error AuctionEndAlreadyCalled();
-    error OnlyCanBeCallAfterThisTime();
-    error OnlyCanBeCallBeforeThisTime();
-
-    mapping(address => uint) public pendingReturns;
-    bool ended;
-    modifier onlyBefore(uint time) {
-        if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
-        _;
-    }
-    modifier onlyAfter(uint time) {
-        if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
-        _;
-    }
-    constructor(
-        uint biddingTime,
-        address payable beneficiaryAddress
-    ) {
+    function init(uint biddingTime, address payable beneficiaryAddress) public {
         beneficiary = beneficiaryAddress;
         auctionEndTime = block.timestamp + biddingTime;
     }

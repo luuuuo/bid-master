@@ -3,7 +3,9 @@ pragma solidity ^0.8.17;
 import "./AuctionInterface.sol";
 
 interface BlindAuctionInterface is AuctionInterface {
-    function bid(bytes32 _value) external;
+    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) external;
+
+    function bid(bytes32 _value) payable external;
 
     function reveal(
         uint[] calldata values,

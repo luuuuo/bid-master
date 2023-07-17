@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
-import "hardhat/console.sol";
 
 /*
 将原来的合约中的状态变量和方法都封装到了一个库合约BlindAuctionLib中，并将原来的合约变成了一个使用这个库合约的外部合约。
 在这个库合约中，定义了一些新的结构体和方法，用于对拍卖的状态进行操作。外部合约只需要引用这个库合约，并使用其中的方法即可。
  */
 library BlindAuctionLib {
+
     struct Bid {
         bytes32 blindedBid;
         uint deposit;
@@ -16,7 +16,6 @@ library BlindAuctionLib {
         bool[] fakes;
         string[] secrets;
     }
-
     error RevealMsgError(uint value, bool fake, string secret);
 
     function reveal(

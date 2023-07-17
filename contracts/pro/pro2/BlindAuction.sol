@@ -2,10 +2,10 @@
 pragma solidity ^0.8.17;
 import "hardhat/console.sol";
 
-contract OpenAuction{
+contract BlindAuction{
 
-    bytes32 private constant implementationPosition = keccak256("bid-master-open");
-    bytes32 private constant ownerPosition = keccak256("bid-master-open-owner");
+    bytes32 private constant implementationPosition = keccak256("bid-master");
+    bytes32 private constant ownerPosition = keccak256("bid-master-owner");
     function upgradeTo(address newImplementation) public {
         if(getOwnerAddress() != address(0))
             require(getOwnerAddress() == msg.sender, "not owner's upgrade");
@@ -35,7 +35,7 @@ contract OpenAuction{
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
-            abi.encodeWithSignature("init(uint, uint, address)", biddingTime, revealTime, beneficiaryAddress)
+            abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
         );
         require(success, "Delegatecall failed");
     }
