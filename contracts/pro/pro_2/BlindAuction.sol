@@ -1,64 +1,62 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
-import "./BlindAuctionStorage.sol";
 import "hardhat/console.sol";
-import "./BlindAuctionLogicInterface.sol";
 
-contract BlindAuction is BlindAuctionStorage{
-    BlindAuctionLogicInterface blindAuctionLogicInterface;
-    address public immutable AUCTION_LOGIC_ADDRESS;
-    constructor(
-        uint biddingTime,
-        uint revealTime,
-        address payable beneficiaryAddress,
-        address auctionLogicAddress
-    ) {
-        beneficiary = beneficiaryAddress;
-        bidEndTime = block.timestamp + biddingTime;
-        revealEndTime = bidEndTime + revealTime;
-        AUCTION_LOGIC_ADDRESS = auctionLogicAddress;
-        blindAuctionLogicInterface = BlindAuctionLogicInterface(auctionLogicAddress);
+contract BlindAuction{
+
+    bytes32 private constant implementationPosition = keccak256("bid-master");
+    bytes32 private constant ownerPosition = keccak256("bid-master-owner");
+    function upgradeTo(address newImplementation) public {
+        if(getOwnerAddress() != address(0))
+            require(getOwnerAddress() == msg.sender, "not owner's upgrade");
+        bytes32 newImplementationPosition = implementationPosition;
+        bytes32 newOwnerPosition = ownerPosition;
+        address owner = msg.sender;
+        assembly {
+            sstore(newImplementationPosition, newImplementation)
+            sstore(newOwnerPosition, owner)
+        }
     }
-    
-    function bid(bytes32 _value) external payable {
+
+    function getOwnerAddress() public view returns(address ownerAddress) {
+        bytes32 position = ownerPosition;
+        assembly {
+            ownerAddress := sload(position)
+        }
+    }
+
+    function getImplementation() public view returns(address impl) {
+        bytes32 position = implementationPosition;
+        assembly {
+            impl := sload(position)
+        }
+    }
+
+    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = AUCTION_LOGIC_ADDRESS.delegatecall(
-            abi.encodeWithSignature("bid(bytes32)", _value)
+        (bool success, ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("init(uint, uint, address)", biddingTime, revealTime, beneficiaryAddress)
         );
         require(success, "Delegatecall failed");
     }
 
-    function withdraw() external {
+    function bid(bytes32 _value) external payable {
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = AUCTION_LOGIC_ADDRESS.delegatecall(
-            abi.encodeWithSignature("withdraw()")
+        (bool success, ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("bid(bytes32)", _value)
         );
         require(success, "Delegatecall failed");
     }
 
     function reveal(uint[] calldata values, bool[] calldata fakes, string[] calldata secrets) external {
         // 使用 delegatecall 调用逻辑合约中的函数
-        for (uint i = 0; i < values.length; i++) {
-            (uint value, bool fake, string memory secret) = (values[i], fakes[i], secrets[i]);
-            console.log("=======value===========", value);
-            console.log("=======fake===========", fake);
-            console.logString(secret);
-            console.logBytes32(bids[msg.sender][i].blindedBid);
-            console.logBytes32(keccak256(abi.encode(value, fake, secret)));
+        // msg.data 和 abi.encodeWithSignature("reveal(uint[], bool[], string[])", values, fakes, secrets) 不同？
+        (bool success, bytes memory result) = getImplementation().delegatecall(
+            abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets)
+        );
+        if (!success) {
+            console.logBytes(result);
+            revert(abi.decode(result, (string)));
         }
-        console.log("=======delegatecall start===========", address(blindAuctionLogicInterface));
-        blindAuctionLogicInterface.reveal(values, fakes, secrets);
-        // (bool success, bytes memory result) = AUCTION_LOGIC_ADDRESS.delegatecall(
-        //     abi.encodeWithSignature("reveal(uint[], bool[], string[])", values, fakes, secrets)
-        // );
-        // console.log("=======success===========", success);
-        // if (!success) {
-        //     // handle exception here
-        //     console.logBytes(result);
-        //     revert(abi.decode(result, (string)));
-        // }
-        
-        // require(success, abi.decode(result, (string)));
-        console.log("=======delegatecall end===========");
     }
 }

@@ -24,12 +24,13 @@ describe("BlindAuctionPro test", function () {
     });
     const blindAuctionLogic = await BlindAuctionLogic.deploy();
     console.log("blindAuctionLogic", blindAuctionLogic.address);
-
     const BlindAuction = await ethers.getContractFactory("contracts/pro/pro_2/BlindAuction.sol:BlindAuction");
-    const blindAuction = await BlindAuction.deploy(biddingTime, revealTime, beneficiaryAddress, blindAuctionLogic.address);
+    const blindAuction = await BlindAuction.deploy();
+    await blindAuction.init(biddingTime, revealTime, beneficiaryAddress);
+    await blindAuction.upgradeTo(blindAuctionLogic.address);
     return { alice, bob, beneficiaryAddress, blindAuctionLogic, blindAuction };
   }
-
+  
   describe("main flow", function () {
     it("Should Check correct attribute", async function () {
       // loadFixture will run the setup the first time, and quickly return to that state in the other tests.
@@ -43,17 +44,23 @@ describe("BlindAuctionPro test", function () {
         ethers.utils.defaultAbiCoder.encode(["uint256", "bool", "string"], [ethers.utils.parseEther("2.0").toString(), false, "abc"]),
       );
       // alice第一次bid
-      console.log("alice第一次bid");
-      console.log(bid1);
-      await blindAuction.connect(alice).bid(bid1, { value: ethers.utils.parseEther("1.0") });
-      console.log(await blindAuction.bids(alice.address, 0));
+      console.log("alice第一次bid:", bid1);
+      console.log("alice第一次bid before EtherBalance:", await ethers.provider.getBalance(alice.address));
+      await blindAuction.bid(bid1, {from: alice.address, value: ethers.utils.parseEther("1.0")});
+      console.log("alice第一次bid after EtherBalance:", await ethers.provider.getBalance(alice.address));
+
       // alice第二次bid
-      console.log("alice第二次bid");
-      console.log(bid2);
-      await blindAuction.connect(alice).bid(bid2, { value: ethers.utils.parseEther("2.0") });
-      console.log(await blindAuction.bids(alice.address, 1));
+      console.log("alice第二次bid:", bid2);
+      console.log("alice第二次bid before EtherBalance:", await ethers.provider.getBalance(alice.address));
+      await blindAuction.bid(bid2, {from: alice.address, value: ethers.utils.parseEther("2.0") });
+      console.log("alice第二次bid EtherBalance:", await ethers.provider.getBalance(alice.address));
+
       // 披露
-      await blindAuction.connect(alice).reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"]);
+      console.log("alice before reveal blindAuction EtherBalance:", await ethers.provider.getBalance(blindAuction.address));
+      console.log("alice before reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
+      await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
+      console.log("alice after reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
+      console.log("alice after reveal blindAuction EtherBalance:", await ethers.provider.getBalance(blindAuction.address));
     });
   });
 });

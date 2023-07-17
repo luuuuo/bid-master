@@ -36,7 +36,7 @@ module.exports = {
       ],
   },
   networks: {
-    localhost: {
+    tenderly: {
       url: DEVNET_RPC_URL,
       chainId: 1,
     },

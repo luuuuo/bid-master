@@ -4,9 +4,8 @@ import "hardhat/console.sol";
 import "./BlindAuctionLib.sol";
 import "./AuctionErrors.sol";
 import "./AuctionEvents.sol";
-import "./AuctionModifier.sol";
 
-contract BlindAuction is AuctionEvents, AuctionErrors, AuctionModifier{
+contract BlindAuction is AuctionEvents, AuctionErrors{
     mapping(address => BlindAuctionLib.Bid[]) public bids;
     // 拍卖的当前状态。
     address public highestBidder;
@@ -22,6 +21,18 @@ contract BlindAuction is AuctionEvents, AuctionErrors, AuctionModifier{
     uint public bidEndTime;
     uint public revealEndTime;
     address payable public beneficiary;
+    // 使用 修饰符（modifier） 可以更便捷的校验函数的入参。
+    // 'onlyBefore' 会被用于后面的 'bid' 函数：
+    // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
+    modifier onlyBefore(uint time) {
+        if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
+        _;
+    }
+    modifier onlyAfter(uint time) {
+        if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
+        _;
+    }
+
     /// 以受益者地址 'beneficiaryAddress' 创建一个简单的拍卖，拍卖时长为 '_biddingTime'。
     constructor(
         uint biddingTime,
@@ -70,14 +81,15 @@ contract BlindAuction is AuctionEvents, AuctionErrors, AuctionModifier{
         string[] calldata secrets
     ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
         BlindAuctionLib.BidReveal memory bidReveal = BlindAuctionLib.BidReveal(values, fakes, secrets);
-        // for (uint i = 0; i < length; i++) {
-        //     (uint value, bool fake, string memory secret) = (bidReveal.values[i], bidReveal.fakes[i], bidReveal.secrets[i]);
-        //     console.log("=======value===========", value);
-        //     console.log("=======fake===========", fake);
-        //     console.logString(secret);
-        //     console.logBytes32(bids[msg.sender][i].blindedBid);
-        //     console.logBytes32(keccak256(abi.encode(value, fake, secret)));
-        // }
+        for (uint i = 0; i < values.length; i++) {
+            (uint value, bool fake, string memory secret) = (bidReveal.values[i], bidReveal.fakes[i], bidReveal.secrets[i]);
+            console.log("=======value===========", value);
+            console.log("=======fake===========", fake);
+            console.logString(secret);
+            console.logBytes32(bids[msg.sender][i].blindedBid);
+            console.log("=======bids[msg.sender].length===========", bids[msg.sender].length);
+            console.logBytes32(keccak256(abi.encode(value, fake, secret)));
+        }
         (uint256 lastHighestBid, address lastHighestBidder, uint256 refund) = BlindAuctionLib.reveal(bids[msg.sender], bidReveal, highestBid, highestBidder);
         highestBid = lastHighestBid;
         highestBidder = lastHighestBidder;

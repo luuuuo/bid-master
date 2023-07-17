@@ -54,10 +54,17 @@ describe("BlindAuctionPro test", function () {
       await blindAuction.bid(bid2, {from: alice.address, value: ethers.utils.parseEther("2.0") });
       console.log(await blindAuction.bids(alice.address, 1));
       console.log("alice第二次bid EtherBalance:", await ethers.provider.getBalance(alice.address));
+      
       // 披露
+      console.log("before reveal 数据:", await blindAuction.bids(alice.address, 0));
+      console.log("before reveal 数据:", await blindAuction.bids(alice.address, 1));
       console.log("alice before reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
       await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
       console.log("alice after reveal EtherBalance:", await ethers.provider.getBalance(alice.address));
+      console.log("alice after reveal blindAuction EtherBalance:", await ethers.provider.getBalance(blindAuction.address));
+      console.log("after reveal 数据:", await blindAuction.bids(alice.address,0));
+      console.log("after reveal 数据:", await blindAuction.bids(alice.address,1));
+
     });
   });
 });

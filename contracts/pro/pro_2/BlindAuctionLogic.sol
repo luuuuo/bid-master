@@ -4,36 +4,38 @@ import "hardhat/console.sol";
 import "./BlindAuctionLib.sol";
 import "./AuctionErrors.sol";
 import "./AuctionEvents.sol";
-import "./AuctionModifier.sol";
 import "./BlindAuctionStorage.sol";
-contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, BlindAuctionStorage{
-    constructor() {}
+contract BlindAuctionLogic is AuctionEvents, AuctionErrors, BlindAuctionStorage{
+    // 使用 修饰符（modifier） 可以更便捷的校验函数的入参。
+    // 'onlyBefore' 会被用于后面的 'bid' 函数：
+    // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
+    modifier onlyBefore(uint time) {
+        // if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
+        _;
+    }
+    modifier onlyAfter(uint time) {
+        // if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
+        _;
+    }
+
+    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
+        beneficiary = beneficiaryAddress;
+        bidEndTime = block.timestamp + biddingTime;
+        revealEndTime = bidEndTime + revealTime;
+    }
     /// 设置一个盲拍。
     function bid(bytes32 blindedBid) external payable onlyBefore(bidEndTime) {
         bids[msg.sender].push(BlindAuctionLib.Bid({ blindedBid: blindedBid, deposit: msg.value }));
         emit SomeoneBid(msg.sender);
     }
-    /// 撤回出价过高的竞标。
-    function withdraw() external {
-        uint amount = pendingReturns[msg.sender];
-        if (amount > 0) {
-            pendingReturns[msg.sender] = 0;
-            payable(msg.sender).transfer(amount);
-        }
-    }
-    /// 披露你的盲拍出价。
     function reveal(
         uint[] calldata values,
         bool[] calldata fakes,
         string[] calldata secrets
     ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
-        console.log("=======logic reveal 0===========");
         BlindAuctionLib.BidReveal memory bidReveal = BlindAuctionLib.BidReveal(values, fakes, secrets);
-        console.log("=======logic reveal 1===========");
         emit RevealDetail(values, fakes, secrets);
-        console.log("=======logic reveal 2===========");
         (uint256 lastHighestBid, address lastHighestBidder, uint256 refund) = BlindAuctionLib.reveal(bids[msg.sender], bidReveal, highestBid, highestBidder);
-        console.log("=======logic reveal 3===========");
         highestBid = lastHighestBid;
         highestBidder = lastHighestBidder;
         delete bids[msg.sender];
@@ -47,9 +49,5 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, AuctionModifier, Bli
         ended = true;
         beneficiary.transfer(highestBid);
         emit AuctionEnded();
-    }
-
-    fallback() external {
-        console.log("=======fallback===========");
     }
 }

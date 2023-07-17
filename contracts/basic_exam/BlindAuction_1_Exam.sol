@@ -8,7 +8,7 @@ contract BlindAuction_1 {
    
 
      //步骤2：设置竞拍的方法可见性为外部，同时该函数可以接受原生币  
-    function bid() {
+    function bid() public {
 
      //步骤3：记录竞拍最高价的地址为当前用户的地址，竞拍最高金额为当前
      //接收的原生币数值（提示：使用全局变量）
