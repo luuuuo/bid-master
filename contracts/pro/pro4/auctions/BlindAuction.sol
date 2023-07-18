@@ -34,6 +34,10 @@ contract BlindAuction is AuctionOwnerController{
 
     function reveal(uint[] calldata values, bool[] calldata fakes, string[] calldata secrets) external {
         // 使用 delegatecall 调用逻辑合约中的函数
+        console.log("------------------");
+        console.logBytes(msg.data);
+        console.log("==================");
+        console.logBytes(abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets));
         (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets)
         );
