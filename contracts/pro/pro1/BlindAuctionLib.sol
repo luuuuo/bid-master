@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 /*
-将原来的合约中的状态变量和方法都封装到了一个库合约BlindAuctionLib中，并将原来的合约变成了一个使用这个库合约的外部合约。
+将原来的合约中的结构体和方法都封装到了一个库合约BlindAuctionLib中，并将原来的合约变成了一个使用这个库合约的外部合约。
 在这个库合约中，定义了一些新的结构体和方法，用于对拍卖的状态进行操作。外部合约只需要引用这个库合约，并使用其中的方法即可。
  */
 library BlindAuctionLib {
@@ -25,9 +25,9 @@ library BlindAuctionLib {
         address highestBidder
     ) external view returns (uint256 lastHighestBid, address lastHighestBidder, uint256 refund){
         uint length = blindInfo.length;
-        require(bidReveals.values.length == length);
-        require(bidReveals.fakes.length == length);
-        require(bidReveals.secrets.length == length);
+        require(bidReveals.values.length == length,"LNM");//,"LNM" is "These lengths do not match"
+        require(bidReveals.fakes.length == length,"LNM");
+        require(bidReveals.secrets.length == length,"LNM");
         for (uint i = 0; i < length; i++) {
             Bid memory bidToCheck = blindInfo[i];
             (uint value, bool fake, string memory secret) = (bidReveals.values[i], bidReveals.fakes[i], bidReveals.secrets[i]);

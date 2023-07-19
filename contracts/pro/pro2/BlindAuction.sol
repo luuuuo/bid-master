@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.17;
 import "hardhat/console.sol";
+import "./BlindAuctionStorage.sol";
 
-contract BlindAuction{
+contract BlindAuction is BlindAuctionStorage {
 
     bytes32 private constant implementationPosition = keccak256("bid-master");
     bytes32 private constant ownerPosition = keccak256("bid-master-owner");
@@ -32,11 +33,15 @@ contract BlindAuction{
         }
     }
 
+    bool internal initStatus = false;
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
+        require(!initStatus,"Already init");
+
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
             abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
         );
+        if(success) initStatus = true;
         require(success, "Delegatecall failed");
     }
 
