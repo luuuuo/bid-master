@@ -11,8 +11,12 @@ import "../storages/OpenAuctionStorage.sol";
 contract OpenAuctionLogic is AbstractBasicAuction, OpenAuctionInterface, OpenAuctionStorage{
 
     function init(uint biddingTime, address payable beneficiaryAddress) public {
+        require(!initStatus,"Already init");
+        
         beneficiary = beneficiaryAddress;
         auctionEndTime = block.timestamp + biddingTime;
+
+        initStatus = true;
     }
 
     function bid() external payable onlyBefore(auctionEndTime) {
