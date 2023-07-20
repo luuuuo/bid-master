@@ -14,6 +14,8 @@ contract AuctionFactory {
     address public blindAuctionImpl;
     address public openAuctionImpl;
 
+    event AuctionCreated(address indexed _newAuctionAddr, address indexed _creator,AuctionType _auctionType);
+
     modifier onlyOwner() {
         if(getOwnerAddress() != address(0))
             require(getOwnerAddress() == msg.sender, "not owner's operation");
@@ -40,6 +42,7 @@ contract AuctionFactory {
             auctionAddress = address(openAuction);
         }
         userAuctions[msg.sender].push(Auctions(_auctionType, auctionAddress));
+        emit AuctionCreated(auctionAddress,msg.sender, _auctionType);
         return auctionAddress;
     }
 

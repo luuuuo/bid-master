@@ -3,7 +3,9 @@ pragma solidity ^0.8.17;
 import "hardhat/console.sol";
 import "./AuctionOwnerController.sol";
 
-contract OpenAuction is AuctionOwnerController{
+import "../storages/OpenAuctionStorage.sol";
+
+contract OpenAuction is AuctionOwnerController, OpenAuctionStorage{
 
     function getImplementationPosition() public override pure returns(bytes32 implementationPosition){
         implementationPosition = keccak256("bid-master-open");
