@@ -16,19 +16,19 @@ contract BlindAuction is AuctionOwnerController, BlindAuctionStorage{
 
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public onlyOwner(){
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = getImplementation().delegatecall(
+        (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
         );
-        require(success, "Delegatecall failed");
+        require(success && result.length == 0, "delegatecall failed");
         setOwnership(msg.sender);
     }
 
     function bid(bytes32 _value) external payable {
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = getImplementation().delegatecall(
+        (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("bid(bytes32)", _value)
         );
-        require(success, "Delegatecall failed");
+        require(success && result.length == 0, "delegatecall failed");
     }
 
     function reveal(uint[] calldata values, bool[] calldata fakes, string[] calldata secrets) external {
@@ -40,18 +40,18 @@ contract BlindAuction is AuctionOwnerController, BlindAuctionStorage{
         (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets)
         );
-        if (!success) {
-            console.logBytes(result);
-            revert(abi.decode(result, (string)));
-        }
+        require(success && result.length == 0, "delegatecall failed");
     }
 
-    function auctionEnd() public{
+    function auctionEnd() external{
+        // console.log("------------------");
+        // console.logBytes(msg.data);
+        // console.log("==================");
+        // console.logBytes(abi.encodeWithSignature("auctionEnd()"));
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = getImplementation().delegatecall(
+        (bool success, bytes memory result ) = getImplementation().delegatecall(
             abi.encodeWithSignature("auctionEnd()")
         );
-        require(success, "Delegatecall failed");
-        setOwnership(msg.sender);
+        require(success && result.length == 0, "delegatecall failed");
     }
 }

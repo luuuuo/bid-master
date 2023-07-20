@@ -31,7 +31,7 @@ contract AuctionOwnerController{
     function getOwnerPosition() public virtual pure returns(bytes32 ownerPosition){
         ownerPosition = keccak256("bid-master-open-owner");
     }
-
+    
     function getOwnerAddress() public view returns(address ownerAddress) {
         bytes32 position = getOwnerPosition();
         assembly {

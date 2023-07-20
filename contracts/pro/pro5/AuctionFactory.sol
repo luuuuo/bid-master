@@ -16,7 +16,7 @@ contract AuctionFactory {
     address public openAuctionImpl;
     bool public emergencyFlag;
 
-    event AuctionCreated(address indexed _newAuctionAddr, address indexed _creator,AuctionType _auctionType);
+    event AuctionCreated(address indexed _newAuctionAddr, address indexed _creator, AuctionType _auctionType);
 
     modifier onlyOwner() {
         if(getOwnerAddress() != address(0))
@@ -25,7 +25,7 @@ contract AuctionFactory {
     }
 
     modifier onlyNotEmergency() {
-        require(!emergencyFlag,"Emergency status");
+        require(!emergencyFlag, "Emergency status");
         _;
     }
 
@@ -53,7 +53,7 @@ contract AuctionFactory {
             auctionAddress = address(openAuction);
         }
         userAuctions[msg.sender].push(Auctions(_auctionType, auctionAddress));
-        emit AuctionCreated(auctionAddress,msg.sender, _auctionType);
+        emit AuctionCreated(auctionAddress, msg.sender, _auctionType);
 
         return auctionAddress;
     }
@@ -68,7 +68,7 @@ contract AuctionFactory {
         openAuctionImpl = _newOpenAuctionImpl;
     }
 
-    function getOwnerPosition() public virtual pure returns(bytes32 ownerPosition){
+    function getOwnerPosition() public pure returns(bytes32 ownerPosition){
         ownerPosition = keccak256("auction-factory-owner");
     }
     
