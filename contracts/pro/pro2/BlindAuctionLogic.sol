@@ -18,7 +18,6 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, BlindAuctionStorage{
         _;
     }
 
-    bool internal initStatus = false;
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
         require(!initStatus,"Already init");
 
