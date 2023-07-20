@@ -14,12 +14,18 @@ contract AuctionFactory {
     Auctions[] public allAuctions;
     address public blindAuctionImpl;
     address public openAuctionImpl;
+    bool public emergencyFlag;
 
     event AuctionCreated(address indexed _newAuctionAddr, address indexed _creator,AuctionType _auctionType);
 
     modifier onlyOwner() {
         if(getOwnerAddress() != address(0))
             require(getOwnerAddress() == msg.sender, "not owner's operation");
+        _;
+    }
+
+    modifier onlyNotEmergency() {
+        require(!emergencyFlag,"Emergency status");
         _;
     }
 
@@ -33,7 +39,7 @@ contract AuctionFactory {
         return allAuctions.length;
     }
     
-    function createAuctions(AuctionType _auctionType) external returns (address auctionAddress) {
+    function createAuctions(AuctionType _auctionType) external onlyNotEmergency returns (address auctionAddress) {
         // 创建新合约
         if(_auctionType == AuctionType.Blind){
             BlindAuction blindAuction = new BlindAuction();
