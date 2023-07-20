@@ -11,6 +11,7 @@ contract AuctionFactory {
     }
     mapping(address => Auctions[]) public userAuctions; 
 
+    Auctions[] public allAuctions;
     address public blindAuctionImpl;
     address public openAuctionImpl;
 
@@ -26,6 +27,10 @@ contract AuctionFactory {
         blindAuctionImpl = _blindAuctionImpl;
         openAuctionImpl = _openAuctionImpl;
         setOwnership(msg.sender);
+    }
+
+    function allAuctionsLength() external view returns (uint) {
+        return allAuctions.length;
     }
 
     function createAuctions(AuctionType _auctionType) external returns (address auctionAddress) {
