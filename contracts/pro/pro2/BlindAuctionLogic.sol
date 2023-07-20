@@ -19,9 +19,13 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, BlindAuctionStorage{
     }
 
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
+        require(!initStatus,"Already init");
+
         beneficiary = beneficiaryAddress;
         bidEndTime = block.timestamp + biddingTime;
         revealEndTime = bidEndTime + revealTime;
+
+        initStatus = true;
     }
     /// 设置一个盲拍。
     function bid(bytes32 blindedBid) external payable onlyBefore(bidEndTime) {
