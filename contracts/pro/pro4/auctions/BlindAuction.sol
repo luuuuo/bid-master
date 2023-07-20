@@ -14,9 +14,7 @@ contract BlindAuction is AuctionOwnerController, BlindAuctionStorage{
         ownerPosition = keccak256("bid-master-blind-owner");
     }
 
-    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
-        if(getOwnerAddress() != address(0))
-            require(getOwnerAddress() == msg.sender, "not owner's operation");
+    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public onlyOwner(){
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
             abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
@@ -46,5 +44,14 @@ contract BlindAuction is AuctionOwnerController, BlindAuctionStorage{
             console.logBytes(result);
             revert(abi.decode(result, (string)));
         }
+    }
+
+    function auctionEnd() public{
+        // 使用 delegatecall 调用逻辑合约中的函数
+        (bool success, ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("auctionEnd()")
+        );
+        require(success, "Delegatecall failed");
+        setOwnership(msg.sender);
     }
 }

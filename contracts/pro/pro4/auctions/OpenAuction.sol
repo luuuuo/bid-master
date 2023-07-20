@@ -14,9 +14,7 @@ contract OpenAuction is AuctionOwnerController, OpenAuctionStorage{
         ownerPosition = keccak256("bid-master-open-owner");
     }
 
-    function init(uint biddingTime, address payable beneficiaryAddress) public {
-        if(getOwnerAddress() != address(0))
-            require(getOwnerAddress() == msg.sender, "not owner's operation");
+    function init(uint biddingTime, address payable beneficiaryAddress) public onlyOwner(){
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, ) = getImplementation().delegatecall(
             abi.encodeWithSignature("init(uint256,address)", biddingTime, beneficiaryAddress)
@@ -42,5 +40,14 @@ contract OpenAuction is AuctionOwnerController, OpenAuctionStorage{
             console.logBytes(result);
             revert(abi.decode(result, (string)));
         }
+    }
+    
+    function auctionEnd() public{
+        // 使用 delegatecall 调用逻辑合约中的函数
+        (bool success, ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("auctionEnd()")
+        );
+        require(success, "Delegatecall failed");
+        setOwnership(msg.sender);
     }
 }

@@ -12,12 +12,9 @@ contract OpenAuctionLogic is AbstractBasicAuction, OpenAuctionInterface, OpenAuc
 
     function init(uint biddingTime, address payable beneficiaryAddress) public {
         require(!initStatus,"Already init");
-
         beneficiary = beneficiaryAddress;
         auctionEndTime = block.timestamp + biddingTime;
-
         initStatus = true;
-
     }
 
     function bid() external payable onlyBefore(auctionEndTime) {
@@ -40,10 +37,7 @@ contract OpenAuctionLogic is AbstractBasicAuction, OpenAuctionInterface, OpenAuc
     }
 
     /// 结束拍卖，并把最高的出价发送给受益人。
-    function auctionEnd() external onlyAfter(auctionEndTime) {
-        if (ended)
-            revert AuctionEndAlreadyCalled();
-        ended = true;
-        beneficiary.transfer(highestBid);
+    function auctionEnd() public override(AbstractBasicAuction, AuctionInterface) onlyAfter(auctionEndTime) {
+        AbstractBasicAuction.auctionEnd();
     }
 }
