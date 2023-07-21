@@ -29,7 +29,6 @@ contract BlindAuction_5 {
     error OnlyCanBeCallBeforeThisTime();
 
     // 允许取回以前的竞标。
-    mapping(address => uint) public pendingReturns;
     // 拍卖结束后设为 'true'，将禁止所有的变更
     // 默认初始化为 'false'。
     bool ended;
@@ -65,21 +64,7 @@ contract BlindAuction_5 {
         bids[msg.sender].push(Bid({ blindedBid: blindedBid, deposit: msg.value }));
     }
 
-    /// 撤回出价过高的竞标。
-    function withdraw() external {
-        uint amount = pendingReturns[msg.sender];
-        if (amount > 0) {
-            // 将其设置为0是很重要的，
-            // 因为接收者可以在 'send' 返回之前再次调用这个函数
-            // 作为接收调用的一部分。
-            pendingReturns[msg.sender] = 0;
-            // msg.sender 不属于 'address payable' 类型，
-            // 必须使用 'payable(msg.sender)' 明确转换，
-            // 以便使用成员函数 'transfer()'。
-            payable(msg.sender).transfer(amount);
-        }
-    }
-
+   
     /// 结束拍卖，并把最高的出价发送给受益人。
     function auctionEnd() external onlyAfter(auctionEndTime) {
         // 对于可与其他合约交互的函数（意味着它会调用其他函数或发送以太币），
