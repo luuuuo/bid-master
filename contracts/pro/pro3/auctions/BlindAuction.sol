@@ -14,33 +14,44 @@ contract BlindAuction is AuctionOwnerController, BlindAuctionStorage{
         ownerPosition = keccak256("bid-master-blind-owner");
     }
 
-    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
-        if(getOwnerAddress() != address(0))
-            require(getOwnerAddress() == msg.sender, "not owner's operation");
+    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public onlyOwner(){
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = getImplementation().delegatecall(
+        (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
         );
-        require(success, "Delegatecall failed");
+        require(success && result.length == 0, "delegatecall failed");
         setOwnership(msg.sender);
     }
 
     function bid(bytes32 _value) external payable {
         // 使用 delegatecall 调用逻辑合约中的函数
-        (bool success, ) = getImplementation().delegatecall(
+        (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("bid(bytes32)", _value)
         );
-        require(success, "Delegatecall failed");
+        require(success && result.length == 0, "delegatecall failed");
     }
 
     function reveal(uint[] calldata values, bool[] calldata fakes, string[] calldata secrets) external {
         // 使用 delegatecall 调用逻辑合约中的函数
+        // console.log("------------------");
+        // console.logBytes(msg.data);
+        // console.log("==================");
+        // console.logBytes(abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets));
         (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("reveal(uint256[],bool[],string[])", values, fakes, secrets)
         );
-        if (!success) {
-            console.logBytes(result);
-            revert(abi.decode(result, (string)));
-        }
+        require(success && result.length == 0, "delegatecall failed");
+    }
+
+    function auctionEnd() external{
+        // console.log("------------------");
+        // console.logBytes(msg.data);
+        // console.log("==================");
+        // console.logBytes(abi.encodeWithSignature("auctionEnd()"));
+        // 使用 delegatecall 调用逻辑合约中的函数
+        (bool success, bytes memory result ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("auctionEnd()")
+        );
+        require(success && result.length == 0, "delegatecall failed");
     }
 }
