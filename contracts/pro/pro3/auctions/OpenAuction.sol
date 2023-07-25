@@ -15,6 +15,7 @@ contract OpenAuction is AuctionOwnerController, OpenAuctionStorage{
     }
 
     function init(uint biddingTime, address payable beneficiaryAddress) public onlyOwner(){
+        console.log("================beneficiaryAddress:", beneficiaryAddress);
         // 使用 delegatecall 调用逻辑合约中的函数
         (bool success, bytes memory result) = getImplementation().delegatecall(
             abi.encodeWithSignature("init(uint256,address)", biddingTime, beneficiaryAddress)
