@@ -7,13 +7,7 @@ contract BlindAuction_6 {
         bytes32 blindedBid;
         uint deposit;
     }
-
-    struct BidReveal {
-        uint256 value;
-        bool fake;
-        string secret;
-    }
-
+    
     mapping(address => Bid[]) public bids;
 
     // 拍卖的参数。
@@ -99,13 +93,19 @@ contract BlindAuction_6 {
     /// 披露你的盲拍出价。
     /// 对于所有正确披露的无效出价以及除最高出价以外的所有出价，您都将获得退款。
     /// 未披露的盲拍将竞拍无效
-    function reveal(BidReveal[] calldata reveals) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
+    function reveal(
+        uint[] calldata values,
+        bool[] calldata fakes,
+        string[] calldata secrets
+    ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
         uint length = bids[msg.sender].length;
-        require(reveals.length == length);
+        require(values.length == length);
+        require(fakes.length == length);
+        require(secrets.length == length);
         uint refund;
         for (uint i = 0; i < length; i++) {
             Bid storage bidToCheck = bids[msg.sender][i];
-            (uint value, bool fake, string calldata secret) = (reveals[i].value, reveals[i].fake, reveals[i].secret);
+            (uint value, bool fake, string calldata secret) = (values[i], fakes[i], secrets[i]);
             console.log("=======value===========", value);
             console.log("=======fake===========", fake);
             console.logString(secret);

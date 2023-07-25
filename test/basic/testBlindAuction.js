@@ -46,7 +46,7 @@ describe("BlindAuction test", function () {
 
       // 披露
       const balanceBeforeReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
-      await blindAuction.reveal([[ethers.utils.parseEther("1.0"), true, "abc"],[ethers.utils.parseEther("2.0"),false,"abc"]], {from: alice.address});
+      await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
       const balanceAfterReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
       // 断言合约中余额为 2 ETH
       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
