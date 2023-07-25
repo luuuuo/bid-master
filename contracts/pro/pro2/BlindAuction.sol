@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 import "hardhat/console.sol";
 import "./BlindAuctionStorage.sol";
 
-contract BlindAuction is BlindAuctionStorage {
+contract BlindAuction {
 
     bytes32 private constant implementationPosition = keccak256("bid-master");
     bytes32 private constant ownerPosition = keccak256("bid-master-owner");
