@@ -11,12 +11,17 @@ contract BlindAuction {
         if(getOwnerAddress() != address(0))
             require(getOwnerAddress() == msg.sender, "not owner's upgrade");
         bytes32 newImplementationPosition = implementationPosition;
-        bytes32 newOwnerPosition = ownerPosition;
-        address owner = msg.sender;
         assembly {
             sstore(newImplementationPosition, newImplementation)
-            sstore(newOwnerPosition, owner)
         }
+    }
+
+    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
+        // 使用 delegatecall 调用逻辑合约BlindAuctionLogic中的init函数
+        (bool success, ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
+        );
+        require(success, "Delegatecall failed");
     }
 
     function getOwnerAddress() public view returns(address ownerAddress) {
@@ -31,14 +36,6 @@ contract BlindAuction {
         assembly {
             impl := sload(position)
         }
-    }
-
-    function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
-        // 使用 delegatecall 调用逻辑合约BlindAuctionLogic中的init函数
-        (bool success, ) = getImplementation().delegatecall(
-            abi.encodeWithSignature("init(uint256,uint256,address)", biddingTime, revealTime, beneficiaryAddress)
-        );
-        require(success, "Delegatecall failed");
     }
 
     function bid(bytes32 _value) external payable {

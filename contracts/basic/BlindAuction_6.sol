@@ -7,7 +7,13 @@ contract BlindAuction_6 {
         bytes32 blindedBid;
         uint deposit;
     }
-    
+
+    struct BidReveal {
+        uint256 value;
+        bool fake;
+        string secret;
+    }
+
     mapping(address => Bid[]) public bids;
 
     // 拍卖的参数。
@@ -44,11 +50,11 @@ contract BlindAuction_6 {
     // 'onlyBefore' 会被用于后面的 'bid' 函数：
     // 新的函数体是由 modifier 本身的函数体，其中'_'被旧的函数体所取代。
     modifier onlyBefore(uint time) {
-        if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
+        // if (block.timestamp >= time) revert OnlyCanBeCallBeforeThisTime();
         _;
     }
     modifier onlyAfter(uint time) {
-        if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
+        // if (block.timestamp <= time) revert OnlyCanBeCallAfterThisTime();
         _;
     }
     /// 以受益者地址 'beneficiaryAddress' 创建一个简单的拍卖，
@@ -90,23 +96,16 @@ contract BlindAuction_6 {
         }
     }
 
-
     /// 披露你的盲拍出价。
     /// 对于所有正确披露的无效出价以及除最高出价以外的所有出价，您都将获得退款。
     /// 未披露的盲拍将竞拍无效
-    function reveal(
-        uint[] calldata values,
-        bool[] calldata fakes,
-        string[] calldata secrets
-    ) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
+    function reveal(BidReveal[] calldata reveals) external onlyAfter(bidEndTime) onlyBefore(revealEndTime) {
         uint length = bids[msg.sender].length;
-        require(values.length == length);
-        require(fakes.length == length);
-        require(secrets.length == length);
+        require(reveals.length == length);
         uint refund;
         for (uint i = 0; i < length; i++) {
             Bid storage bidToCheck = bids[msg.sender][i];
-            (uint value, bool fake, string calldata secret) = (values[i], fakes[i], secrets[i]);
+            (uint value, bool fake, string calldata secret) = (reveals[i].value, reveals[i].fake, reveals[i].secret);
             console.log("=======value===========", value);
             console.log("=======fake===========", fake);
             console.logString(secret);

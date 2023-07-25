@@ -26,8 +26,8 @@ describe("BlindAuctionPro test", function () {
     console.log("blindAuctionLogic", blindAuctionLogic.address);
     const BlindAuction = await ethers.getContractFactory("contracts/pro/pro2/BlindAuction.sol:BlindAuction");
     const blindAuction = await BlindAuction.deploy();
-    await blindAuction.init(biddingTime, revealTime, beneficiaryAddress);
     await blindAuction.upgradeTo(blindAuctionLogic.address);
+    await blindAuction.init(biddingTime, revealTime, beneficiaryAddress);
     console.log("owner", await blindAuction.getOwnerAddress())
     return { alice, bob, beneficiaryAddress, blindAuctionLogic, blindAuction };
   }
@@ -68,12 +68,11 @@ describe("BlindAuctionPro test", function () {
 
        // 断言合约中余额为 2 ETH
        expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
-       // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
-       expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
        console.log("alice reveal前:%s, 后:%s, 退款:%s：", balanceBeforeReveal.toString(), balanceAfterReveal.toString(), balanceAfterReveal.sub(balanceBeforeReveal).abs().toString());
-       expect(balanceAfterReveal.sub(balanceBeforeReveal).abs()).to.be.lte(ethers.utils.parseEther("1.0")).to.be.gte(ethers.utils.parseEther("0.999"));
        console.log("blindAuction reveal前:%s, 后:%s", auctionBalanceBeforeReveal.toString(), auctionBalanceAfterReveal.toString());
        console.log("reveal后退款 beneficiaryAddress受益人余额：", ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress)).toString());
+       // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
+       expect(balanceAfterReveal.sub(balanceBeforeReveal).abs()).to.be.lte(ethers.utils.parseEther("1.0")).to.be.gte(ethers.utils.parseEther("0.999"));
 
        // 断言结束时收益人余额增加 2 ETH
        const balanceBeforeEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));

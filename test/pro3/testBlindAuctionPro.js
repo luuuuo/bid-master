@@ -28,9 +28,9 @@ describe("BlindAuctionPro test", function () {
     const blindAuction = await BlindAuction.deploy();
     console.log("blindAuction owner address:", await blindAuction.getOwnerAddress());
     console.log("blind auction beneficiaryAddress:", beneficiaryAddress);
-    await blindAuction.init(biddingTime, revealTime, beneficiaryAddress);
     console.log("blindAuction owner address:", await blindAuction.getOwnerAddress());
     await blindAuction.upgradeTo(blindAuctionLogic.address);
+    await blindAuction.init(biddingTime, revealTime, beneficiaryAddress);
     return { alice, bob, beneficiaryAddress, blindAuctionLogic, blindAuction };
   }
 
@@ -46,8 +46,8 @@ describe("BlindAuctionPro test", function () {
     const OpenAuction = await ethers.getContractFactory("contracts/pro/pro3/auctions/OpenAuction.sol:OpenAuction");
     const openAuction = await OpenAuction.deploy();
     console.log("open auction beneficiaryAddress:", beneficiaryAddress);
-    await openAuction.init(biddingTime, beneficiaryAddress);
     await openAuction.upgradeTo(openAuctionLogic.address);
+    await openAuction.init(biddingTime, beneficiaryAddress);
     return { alice, bob, beneficiaryAddress, openAuctionLogic, openAuction };
   }
   describe("main flow", function () {
@@ -70,13 +70,12 @@ describe("BlindAuctionPro test", function () {
        // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
       console.log("refund amount:", balanceAfterWithdraw.sub(balanceBeforeWithdraw).abs());
       expect(balanceAfterWithdraw.sub(balanceBeforeWithdraw).abs()).to.be.lt(ethers.utils.parseEther("1.0")).to.be.gt(ethers.utils.parseEther("0.999"));
-
-       // 断言结束时收益人余额增加 2 ETH
-       const balanceBeforeEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));
-       await openAuction.auctionEnd();
-       const balanceAfterEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));
-       console.log("open auction结束bid前后受益人余额：", balanceBeforeEndAuction.toString(), balanceAfterEndAuction.toString());
-       expect(balanceAfterEndAuction.sub(balanceBeforeEndAuction).abs()).to.be.eq(ethers.utils.parseEther("2.0"));
+      // 断言结束时收益人余额增加 2 ETH
+      const balanceBeforeEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));
+      await openAuction.auctionEnd();
+      const balanceAfterEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));
+      console.log("open auction结束bid前后受益人余额：", balanceBeforeEndAuction.toString(), balanceAfterEndAuction.toString());
+      expect(balanceAfterEndAuction.sub(balanceBeforeEndAuction).abs()).to.be.eq(ethers.utils.parseEther("2.0"));
     });
 
     it("Check blind auction", async function () {

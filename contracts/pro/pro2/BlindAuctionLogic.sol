@@ -52,8 +52,6 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, BlindAuctionStorage{
         if (ended)
             revert AuctionEndAlreadyCalled();
         ended = true;
-        if(highestBid == 0)
-            revert();
         beneficiary.transfer(highestBid);
         emit AuctionEnded();
     }
