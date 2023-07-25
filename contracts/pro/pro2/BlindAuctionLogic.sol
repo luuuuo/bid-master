@@ -19,7 +19,7 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, BlindAuctionStorage{
     }
 
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
-        require(!initStatus,"Already init");
+        require(!initStatus, "Already init");
 
         beneficiary = beneficiaryAddress;
         bidEndTime = block.timestamp + biddingTime;
@@ -46,6 +46,7 @@ contract BlindAuctionLogic is AuctionEvents, AuctionErrors, BlindAuctionStorage{
         payable(msg.sender).transfer(refund);
         emit SomeoneReveal(msg.sender);
     }
+    
     /// 结束拍卖，并把最高的出价发送给受益人。
     function auctionEnd() external onlyAfter(revealEndTime) {
         if (ended)

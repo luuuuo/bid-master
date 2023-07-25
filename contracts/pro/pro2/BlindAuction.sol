@@ -60,4 +60,16 @@ contract BlindAuction is BlindAuctionStorage {
             revert(abi.decode(result, (string)));
         }
     }
+
+    function auctionEnd() external{
+        console.log("------------------");
+        console.logBytes(msg.data);
+        console.log("==================");
+        console.logBytes(abi.encodeWithSignature("auctionEnd()"));
+        // 使用 delegatecall 调用逻辑合约中的函数
+        (bool success, bytes memory result ) = getImplementation().delegatecall(
+            abi.encodeWithSignature("auctionEnd()")
+        );
+        require(success && result.length == 0, "delegatecall failed");
+    }
 }

@@ -49,23 +49,35 @@ describe("BlindAuctionPro test", function () {
        await blindAuction.bid(bid1, {from: alice.address, value: ethers.utils.parseEther("1.0")});
        // 断言合约中余额为 1 ETH
        expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("1.0"));
- 
+       console.log("alice第一次bid beneficiaryAddress受益人余额：", ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress)).toString());
+
        // alice第二次bid
        console.log("alice第二次bid");
        await blindAuction.bid(bid2, {from: alice.address, value: ethers.utils.parseEther("2.0") });
        // 断言合约中余额为 3 ETH
        expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("3.0"));
- 
+       console.log("alice第二次bid beneficiaryAddress受益人余额：", ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress)).toString());
+
        // 披露
        const balanceBeforeReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
        await blindAuction.reveal([ethers.utils.parseEther("1.0"), ethers.utils.parseEther("2.0")],[true,false],["abc","abc"], {from: alice.address});
        const balanceAfterReveal = ethers.BigNumber.from(await ethers.provider.getBalance(alice.address));
+       console.log("披露 beneficiaryAddress受益人余额：", ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress)).toString());
+
        // 断言合约中余额为 2 ETH
        expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
        // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
        expect(await ethers.provider.getBalance(blindAuction.address)).to.equal(ethers.utils.parseEther("2.0"));
-       console.log("reveal后退款：", balanceAfterReveal.sub(balanceBeforeReveal).abs());
+       console.log("reveal后退款：", balanceAfterReveal.sub(balanceBeforeReveal).abs().toString());
        expect(balanceAfterReveal.sub(balanceBeforeReveal).abs()).to.be.lt(ethers.utils.parseEther("1.0")).to.be.gt(ethers.utils.parseEther("0.999"));
+       console.log("reveal后退款 beneficiaryAddress受益人余额：", ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress)).toString());
+
+       // 断言结束时收益人余额增加 2 ETH
+       const balanceBeforeEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));
+       await blindAuction.auctionEnd();
+       const balanceAfterEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(beneficiaryAddress));
+       console.log("结束bid前后受益人余额：", balanceBeforeEndAuction.toString(), balanceAfterEndAuction.toString());
+       expect(balanceAfterEndAuction.sub(balanceBeforeEndAuction).abs()).to.be.eq(ethers.utils.parseEther("2.0"));
     });
   });
 });

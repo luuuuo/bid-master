@@ -9,7 +9,7 @@ import "../interfaces/BlindAuctionInterface.sol";
 contract BlindAuctionLogic is AbstractBasicAuction, BlindAuctionInterface, BlindAuctionStorage{
 
     function init(uint biddingTime, uint revealTime, address payable beneficiaryAddress) public {
-        require(!initStatus,"Already init");
+        require(!initStatus, "Already init");
         beneficiary = beneficiaryAddress;
         auctionEndTime = block.timestamp + biddingTime;
         revealEndTime = auctionEndTime + revealTime;

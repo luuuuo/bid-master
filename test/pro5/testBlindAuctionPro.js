@@ -89,6 +89,16 @@ describe("BlindAuctionPro test", function () {
        // 断言 alice 余额增加小于 1 ETH（存在gas消耗）
       console.log("refund amount:", balanceAfterWithdraw.sub(balanceBeforeWithdraw).abs());
       expect(balanceAfterWithdraw.sub(balanceBeforeWithdraw).abs()).to.be.lt(ethers.utils.parseEther("1.0")).to.be.gt(ethers.utils.parseEther("0.999"));
+
+      // 断言结束时收益人余额增加 2 ETH
+      const balanceBeforeEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(charity.address));
+      await openAuction.auctionEnd();
+      const balanceAfterEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(charity.address));
+      console.log("open auction结束bid前后受益人余额：", balanceBeforeEndAuction.toString(), balanceAfterEndAuction.toString());
+      expect(balanceAfterEndAuction.sub(balanceBeforeEndAuction).abs()).to.be.eq(ethers.utils.parseEther("2.0"));
+      console.log("open auction结束后charity余额：", await charity.donations(0));
+      expect((await charity.donations(0)).donor).to.be.eq(openAuction.address);
+      expect((await charity.donations(0)).amount).to.be.eq(ethers.utils.parseEther("2.0"));
     });
 
     it("Check blind auction", async function () {
@@ -126,8 +136,9 @@ describe("BlindAuctionPro test", function () {
       const balanceBeforeEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(charity.address));
       await blindAuction.auctionEnd();
       const balanceAfterEndAuction = ethers.BigNumber.from(await ethers.provider.getBalance(charity.address));
+      console.log("blind auction结束bid前后受益人余额：", balanceBeforeEndAuction.toString(), balanceAfterEndAuction.toString());
       expect(balanceAfterEndAuction.sub(balanceBeforeEndAuction).abs()).to.be.eq(ethers.utils.parseEther("2.0"));
-      console.log(await charity.donations(0));
+      console.log("blind auction结束后charity余额：", await charity.donations(0));
       expect((await charity.donations(0)).donor).to.be.eq(blindAuction.address);
       expect((await charity.donations(0)).amount).to.be.eq(ethers.utils.parseEther("2.0"));
     });

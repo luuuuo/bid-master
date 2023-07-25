@@ -91,6 +91,7 @@ contract BlindAuction is AuctionEvents, AuctionErrors{
         //     console.logBytes32(keccak256(abi.encode(value, fake, secret)));
         // }
         (uint256 lastHighestBid, address lastHighestBidder, uint256 refund) = BlindAuctionLib.reveal(bids[msg.sender], bidReveal, highestBid, highestBidder);
+        console.log("=======lastHighestBid===========", lastHighestBid);
         highestBid = lastHighestBid;
         highestBidder = lastHighestBidder;
         delete bids[msg.sender];
