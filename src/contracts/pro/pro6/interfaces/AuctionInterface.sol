@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.17;
+
+interface AuctionInterface {
+    function auctionEnd() external;
+
+    function withdraw() external;
+}
